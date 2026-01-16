@@ -32,7 +32,7 @@ export default function EditableText({ value, field, className, tag = "span" }: 
         }
     }, [value]);
 
-    const Tag = tag as any;
+    const Tag = tag as React.ElementType;
 
     return (
         <Tag

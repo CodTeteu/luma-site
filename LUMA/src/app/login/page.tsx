@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CheckCircle, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import LeafShadowOverlay from "@/components/ui/LeafShadowOverlay";
+import Link from "next/link";
 
 export default function LoginPage() {
     const [isLogin, setIsLogin] = useState(false); // Default to REGISTER (Start Project)
@@ -41,15 +41,15 @@ export default function LoginPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                 >
-                    <a href="/" className="inline-flex items-center gap-2 group mb-8 opacity-70 hover:opacity-100 transition-opacity text-[#C19B58]">
+                    <Link href="/" className="inline-flex items-center gap-2 group mb-8 opacity-70 hover:opacity-100 transition-opacity text-[#C19B58]">
                         <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
                         <span>Voltar para Home</span>
-                    </a>
-                    <h1 className="text-4xl xl:text-5xl font-medium mb-4 xl:mb-6 font-[family-name:var(--font-heading)] leading-tight">
+                    </Link>
+                    <h1 className="text-4xl xl:text-5xl font-medium mb-4 xl:mb-6 font-[family-name:var(--font-heading)] leading-tight text-white">
                         Vamos planejar o <br />
                         <span className="text-[#C19B58] italic">grande dia?</span>
                     </h1>
-                    <p className="text-base xl:text-lg text-[#F7F5F0]/80 max-w-md leading-relaxed">
+                    <p className="text-base xl:text-lg text-[#F7F5F0]/90 max-w-md leading-relaxed">
                         Nossa Conciergerie Digital está pronta para criar o site e a identidade visual perfeita para vocês.
                     </p>
                 </motion.div>
@@ -64,7 +64,7 @@ export default function LoginPage() {
                     <div className="flex gap-1 mb-4 text-[#C19B58]">
                         {[1, 2, 3, 4, 5].map(i => <Sparkles key={i} size={14} fill="currentColor" />)}
                     </div>
-                    <p className="text-base xl:text-lg font-serif italic mb-4">"Adorei a facilidade. Só preenchi o briefing e a equipe me chamou no WhatsApp com tudo pronto."</p>
+                    <p className="text-base xl:text-lg font-serif italic mb-4">&quot;Adorei a facilidade. Só preenchi o briefing e a equipe me chamou no WhatsApp com tudo pronto.&quot;</p>
                     <div className="flex items-center gap-4">
                         <div className="w-10 h-10 rounded-full bg-[#C19B58]/20 flex items-center justify-center text-[#C19B58] font-bold">
                             C

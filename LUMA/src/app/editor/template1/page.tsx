@@ -13,14 +13,14 @@ export default function EditorPage() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const activeImageField = useRef<string | null>(null);
 
-    const handleDataChange = (field: keyof TemplateData | string, value: any) => {
+    const handleDataChange = (field: keyof TemplateData | string, value: TemplateData[keyof TemplateData]) => {
         setData(prev => {
             if (field.includes('.')) {
                 const [parent, child] = field.split('.');
                 return {
                     ...prev,
                     [parent]: {
-                        ...(prev as any)[parent],
+                        ...((prev as unknown as Record<string, Record<string, unknown>>)[parent]),
                         [child]: value
                     }
                 };

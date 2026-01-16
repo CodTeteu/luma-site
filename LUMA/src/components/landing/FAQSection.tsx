@@ -63,7 +63,7 @@ function SimpleAccordion({ question, answer }: AccordionItemProps) {
  */
 export function FAQSection() {
     return (
-        <section id="duvidas" className="py-24 px-6 bg-white">
+        <section id="duvidas" className="py-24 px-6 bg-[#F7F5F0]">
             <div className="max-w-3xl mx-auto">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl text-[#2A3B2E] mb-4 font-[family-name:var(--font-heading)]">
@@ -72,7 +72,7 @@ export function FAQSection() {
                     <p className="text-[#6B7A6C]">Tudo o que você precisa saber antes de iniciar.</p>
                 </div>
 
-                <div className="bg-[#F7F5F0] p-8 md:p-12 rounded-2xl border border-[#DCD3C5]">
+                <div className="bg-white p-8 md:p-12 rounded-2xl border border-[#DCD3C5]">
                     {faqItems.map((item, i) => (
                         <SimpleAccordion key={i} question={item.q} answer={item.a} />
                     ))}

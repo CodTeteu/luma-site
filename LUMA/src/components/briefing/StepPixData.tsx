@@ -1,7 +1,7 @@
 "use client";
 
 import { UseFormReturn } from "react-hook-form";
-import { Wallet, Building, User, Key, Info, Smartphone, Mail, FileText, Shuffle, Check } from "lucide-react";
+import { Key, Info, Smartphone, Mail, FileText, Shuffle, Check } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BriefingFormData, pixKeyTypes } from "@/lib/briefingSchema";
@@ -19,7 +19,7 @@ function PixTypeCard({
 }: {
     selected: boolean,
     onClick: () => void,
-    icon: any,
+    icon: React.ComponentType<{ className?: string }>,
     label: string
 }) {
     return (

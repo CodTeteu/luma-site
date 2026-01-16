@@ -64,24 +64,7 @@ export function HeroSection() {
                         </motion.a>
                     </div>
 
-                    <div className="mt-12 flex items-center gap-4 text-sm text-[#6B7A6C]">
-                        <div className="flex -space-x-2">
-                            {[1, 2, 3, 4].map((i) => (
-                                <div
-                                    key={i}
-                                    className="w-8 h-8 rounded-full border-2 border-[#F7F5F0] bg-gray-200"
-                                />
-                            ))}
-                        </div>
-                        <div className="flex flex-col">
-                            <div className="flex text-[#C19B58]">
-                                {[1, 2, 3, 4, 5].map((i) => (
-                                    <Star key={i} size={12} fill="currentColor" />
-                                ))}
-                            </div>
-                            <span>{siteConfig.stats.couplesServed} Casais atendidos</span>
-                        </div>
-                    </div>
+
                 </motion.div>
 
                 {/* Right Column: Social Proof / Visual */}

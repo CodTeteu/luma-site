@@ -18,7 +18,7 @@ const DressCode = () => {
                         {/* Intro Text Block - Compact */}
                         <div className="bg-white p-6 border border-stone-100 shadow-sm">
                             <p className="font-serif italic text-lg text-stone-800 text-center leading-relaxed">
-                                "Vista-se para celebrar o amor, com conforto e elegância."
+                                "                                &quot;Vista-se para celebrar o amor, com conforto e elegância.&quot;"
                             </p>
                         </div>
 

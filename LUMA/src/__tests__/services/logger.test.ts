@@ -17,7 +17,11 @@ describe("Logger Service", () => {
 
     describe("in development mode", () => {
         beforeAll(() => {
-            process.env.NODE_ENV = "development";
+            Object.defineProperty(process.env, "NODE_ENV", {
+                value: "development",
+                writable: true,
+                configurable: true
+            });
         });
 
         it("should log debug messages", () => {

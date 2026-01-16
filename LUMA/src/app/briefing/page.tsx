@@ -76,7 +76,7 @@ export default function BriefingPage() {
 
                         <div className="absolute bottom-8 left-8 right-8 text-center text-white">
                             <p className="font-[family-name:var(--font-heading)] text-2xl italic mb-1 drop-shadow-md">
-                                "O luxo está nos detalhes."
+                                &quot;O luxo está nos detalhes.&quot;
                             </p>
                         </div>
                     </div>

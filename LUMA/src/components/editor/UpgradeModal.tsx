@@ -82,7 +82,7 @@ export default function UpgradeModal({ isOpen, onClose, featureName }: UpgradeMo
                                             <div className="w-5 h-5 rounded-full bg-[#E5E0D6] flex items-center justify-center shrink-0">
                                                 <Check size={12} className="text-[#2A3B2E]" />
                                             </div>
-                                            Remoção da marca d'água LUMA
+                                            Remoção da marca d&apos;água LUMA
                                         </div>
                                     </div>
 

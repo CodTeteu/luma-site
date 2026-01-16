@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Monitor, Smartphone } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
 
 const cases = [
@@ -33,7 +33,7 @@ const cases = [
  */
 export function PortfolioSection() {
     return (
-        <section id="portfolio" className="py-24 px-6 bg-[#F7F5F0] relative">
+        <section id="portfolio" className="py-24 px-6 bg-white relative">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl text-[#2A3B2E] mb-4 font-[family-name:var(--font-heading)]">
@@ -53,13 +53,30 @@ export function PortfolioSection() {
                             className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-[#DCD3C5]"
                         >
                             <div
-                                className="h-64 relative overflow-hidden"
+                                className="h-64 relative overflow-hidden bg-cover bg-center group-hover:scale-105 transition-transform duration-700"
                                 style={{ background: project.image }}
                             >
-                                <div className="absolute inset-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 flex items-center justify-center">
+                                <div className="absolute inset-4 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 flex items-center justify-center transition-opacity duration-300 group-hover:opacity-0">
                                     <span className="text-white font-[family-name:var(--font-heading)] text-2xl drop-shadow-md">
                                         {project.name}
                                     </span>
+                                </div>
+
+                                {/* Overlay Interactions */}
+                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-4 transition-all">
+                                    <span className="text-white font-[family-name:var(--font-heading)] text-2xl mb-2">
+                                        Visualizar em:
+                                    </span>
+                                    <div className="flex gap-4">
+                                        <button className="bg-white text-[#2A3B2E] px-4 py-2 rounded-full text-sm font-medium hover:bg-[#C19B58] hover:text-white transition-colors flex items-center gap-2">
+                                            <Monitor size={16} />
+                                            Computador
+                                        </button>
+                                        <button className="bg-white text-[#2A3B2E] px-4 py-2 rounded-full text-sm font-medium hover:bg-[#C19B58] hover:text-white transition-colors flex items-center gap-2">
+                                            <Smartphone size={16} />
+                                            Celular
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 

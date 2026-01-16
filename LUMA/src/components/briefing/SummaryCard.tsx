@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { CheckCircle, Sparkles, Calendar, Palette, Wallet, MessageCircle, Undo2, PlusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -24,7 +23,7 @@ function formatDate(dateString: string): string {
     });
 }
 
-function SectionPreview({ title, icon: Icon, children }: { title: string, icon: any, children: React.ReactNode }) {
+function SectionPreview({ title, icon: Icon, children }: { title: string, icon: React.ComponentType<{ className?: string }>, children: React.ReactNode }) {
     return (
         <div className="relative pl-6 pb-6 border-l border-[#DCD3C5]/50 last:border-0 last:pb-0">
             <span className="absolute -left-2.5 top-0 w-5 h-5 rounded-full bg-[#F7F5F0] border border-[#DCD3C5] flex items-center justify-center">

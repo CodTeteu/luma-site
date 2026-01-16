@@ -32,8 +32,8 @@ export const siteConfig = {
   navigation: {
     main: [
       { label: "Como Funciona", href: "#como-funciona" },
-      { label: "Portfólio", href: "#portfolio" },
       { label: "Sobre", href: "#sobre" },
+      { label: "Portfólio", href: "#portfolio" },
       { label: "Dúvidas", href: "#duvidas" },
     ],
   },

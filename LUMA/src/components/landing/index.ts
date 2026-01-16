@@ -14,3 +14,4 @@ export { FAQSection } from "./FAQSection";
 export { PartnersSection } from "./PartnersSection";
 export { FinalCTASection } from "./FinalCTASection";
 export { Footer } from "./Footer";
+export { GiftListSection } from "./GiftListSection";

@@ -6,6 +6,7 @@ import {
   HeroSection,
   HowItWorksSection,
   VisualIdentitySection,
+  GiftListSection,
   AboutSection,
   PortfolioSection,
   FAQSection,
@@ -28,6 +29,7 @@ export default function Home() {
       <HeroSection />
       <HowItWorksSection />
       <VisualIdentitySection />
+      <GiftListSection />
       <AboutSection />
       <PortfolioSection />
       <FAQSection />

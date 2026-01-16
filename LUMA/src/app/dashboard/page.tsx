@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LayoutDashboard, Globe, Settings, LogOut, ExternalLink, Plus, Heart } from "lucide-react";
-import Image from "next/image";
+import { LayoutDashboard, Globe, Settings, LogOut, ExternalLink, Plus } from "lucide-react";
+import Link from "next/link";
 import LeafShadowOverlay from "@/components/ui/LeafShadowOverlay";
 
 export default function Dashboard() {
@@ -32,10 +32,10 @@ export default function Dashboard() {
                 </nav>
 
                 <div className="absolute bottom-8 left-0 right-0 px-8">
-                    <a href="/" className="flex items-center gap-3 text-[#6B7A6C] hover:text-[#9B2C2C] transition-colors text-sm font-medium">
+                    <Link href="/" className="flex items-center gap-3 text-[#6B7A6C] hover:text-[#9B2C2C] transition-colors text-sm font-medium">
                         <LogOut size={18} />
                         Sair
-                    </a>
+                    </Link>
                 </div>
             </aside>
 

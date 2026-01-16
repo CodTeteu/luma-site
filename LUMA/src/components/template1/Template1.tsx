@@ -32,7 +32,7 @@ export default function Template1({ data }: Template1Props) {
                 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
             ];
             return `${day} de ${months[parseInt(month) - 1]} de ${year}`;
-        } catch (e) {
+        } catch {
             return dateString;
         }
     };
@@ -94,7 +94,7 @@ export default function Template1({ data }: Template1Props) {
 
                         <div className="hidden md:block">
                             <p className="text-stone-500 font-light text-xs italic tracking-wider">
-                                "O amor é a poesia dos sentidos."
+                                &quot;O amor é a poesia dos sentidos.&quot;
                             </p>
                         </div>
 

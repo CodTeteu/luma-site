@@ -1,8 +1,7 @@
 "use client";
 
-import { UseFormReturn, Controller } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { Palette, Type, Sliders, Check } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
     BriefingFormData,
@@ -53,7 +52,7 @@ function SelectionCard({
 }
 
 export function StepVisualIdentity({ form }: StepVisualIdentityProps) {
-    const { control, watch, setValue, formState: { errors } } = form;
+    const { watch, setValue, formState: { errors } } = form;
     const [showCustomColors, setShowCustomColors] = useState(false);
 
     // Watch values for preview
@@ -94,7 +93,7 @@ export function StepVisualIdentity({ form }: StepVisualIdentityProps) {
                         <SelectionCard
                             key={style.value}
                             selected={selectedStyle === style.value}
-                            onClick={() => setValue("weddingStyle", style.value as any)}
+                            onClick={() => setValue("weddingStyle", style.value as BriefingFormData["weddingStyle"])}
                             className="p-3 flex flex-col items-center justify-center text-center gap-1 min-h-[80px]"
                         >
                             <span className="text-lg mb-0.5 filter drop-shadow-sm">{style.label.split(" ")[0]}</span>
@@ -116,7 +115,7 @@ export function StepVisualIdentity({ form }: StepVisualIdentityProps) {
                         <SelectionCard
                             key={font.value}
                             selected={selectedFont === font.value}
-                            onClick={() => setValue("fontPreference", font.value as any)}
+                            onClick={() => setValue("fontPreference", font.value as BriefingFormData["fontPreference"])}
                             className="p-3 flex items-center gap-3"
                         >
                             <div className="w-10 h-10 bg-[#F7F5F0] rounded flex items-center justify-center text-lg text-[#2A3B2E] font-medium border border-[#DCD3C5]">
