@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import LoadingScreen from '@/components/template1/LoadingScreen';
 import Navbar from '@/components/template1/Navbar';
@@ -15,13 +15,28 @@ import RSVP from '@/components/template1/RSVP';
 import SectionTransition from '@/components/template1/SectionTransition';
 import { Instagram, Mail, Heart } from 'lucide-react';
 import { TemplateData } from '@/types/template';
+import Link from 'next/link';
 
 interface Template1Props {
     data: TemplateData;
 }
 
+// Field to element ID mapping for highlight functionality
+const fieldToElementMap: Record<string, string> = {
+    groomName: "hero-names",
+    brideName: "hero-names",
+    date: "hero-date",
+    "couple.description": "couple-story",
+    "couple.brideBio": "couple-bride-bio",
+    "couple.groomBio": "couple-groom-bio",
+    "ceremony.locationName": "ceremony-location",
+    "ceremony.time": "ceremony-time",
+    "reception.locationName": "reception-location",
+};
+
 export default function Template1({ data }: Template1Props) {
     const [isLoading, setIsLoading] = useState(true);
+    const [highlightedElement, setHighlightedElement] = useState<string | null>(null);
 
     const formatDate = (dateString: string) => {
         if (!dateString) return "";
@@ -37,9 +52,55 @@ export default function Template1({ data }: Template1Props) {
         }
     };
 
+    // Handle highlight messages from editor
+    const handleHighlight = useCallback((field: string) => {
+        const elementId = fieldToElementMap[field];
+        if (!elementId) return;
+
+        const element = document.getElementById(elementId);
+        if (!element) return;
+
+        // Scroll to element
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Apply highlight effect
+        setHighlightedElement(elementId);
+
+        // Remove highlight after animation
+        setTimeout(() => {
+            setHighlightedElement(null);
+        }, 2000);
+    }, []);
+
+    // Listen for messages from parent (editor)
+    useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            if (!event.data) return;
+
+            if (event.data.type === "HIGHLIGHT") {
+                handleHighlight(event.data.field);
+            }
+        };
+
+        window.addEventListener("message", handleMessage);
+        return () => window.removeEventListener("message", handleMessage);
+    }, [handleHighlight]);
+
+    // Get highlight style for element
+    const getHighlightStyle = (elementId: string): React.CSSProperties => {
+        if (highlightedElement === elementId) {
+            return {
+                boxShadow: '0 0 0 4px rgba(193, 155, 88, 0.75)',
+                borderRadius: '8px',
+                transition: 'box-shadow 0.3s ease-in-out',
+            };
+        }
+        return {};
+    };
+
     return (
         <>
-            {/* Optional Loading Screen handling - could be disabled in editor mode via prop if needed */}
+            {/* Optional Loading Screen handling */}
             <LoadingScreen onComplete={() => setIsLoading(false)} />
 
             <motion.div
@@ -51,20 +112,41 @@ export default function Template1({ data }: Template1Props) {
                 <Navbar data={data} />
 
                 <main>
-                    <Hero data={data} />
+                    {/* Hero - Always visible since it contains essential info */}
+                    <div id="hero-section">
+                        <Hero data={data} />
+                    </div>
 
                     <SectionTransition variant="wave" fromColor="#1c1917" toColor="#FDFBF7" />
 
-                    <Couple data={data} />
+                    {/* Couple Section */}
+                    {data.couple?.isVisible !== false && (
+                        <div id="couple-section" style={getHighlightStyle("couple-story")}>
+                            <Couple data={data} />
+                        </div>
+                    )}
 
-                    <Gallery />
+                    {/* Gallery Section */}
+                    {data.gallery?.isVisible !== false && (
+                        <Gallery data={data} />
+                    )}
 
-                    <Ceremony data={data} />
+                    {/* Ceremony & Reception */}
+                    {data.ceremony?.isVisible !== false && (
+                        <div id="ceremony-section" style={getHighlightStyle("ceremony-location")}>
+                            <Ceremony data={data} />
+                        </div>
+                    )}
+
+                    {/* Buffet - Always visible for now */}
                     <Buffet />
 
                     <SectionTransition variant="leaves" fromColor="#FDFBF7" toColor="#FDFBF7" />
 
-                    <Gifts />
+                    {/* Gifts Section */}
+                    {data.gifts?.isVisible !== false && (
+                        <Gifts />
+                    )}
 
                     <div className="h-px bg-stone-200 max-w-7xl mx-auto" />
 
@@ -72,7 +154,10 @@ export default function Template1({ data }: Template1Props) {
 
                     <div className="h-px bg-stone-200 max-w-7xl mx-auto" />
 
-                    <RSVP />
+                    {/* RSVP Section */}
+                    {data.rsvp?.isVisible !== false && (
+                        <RSVP />
+                    )}
 
                     <SectionTransition variant="diagonal" fromColor="#FDFBF7" toColor="#1c1917" />
                 </main>
@@ -99,28 +184,28 @@ export default function Template1({ data }: Template1Props) {
                         </div>
 
                         <div className="flex flex-col md:flex-row items-center gap-6">
-                            <a
+                            <Link
                                 href="#"
                                 className="text-xs uppercase tracking-widest text-stone-400 hover:text-white transition-colors"
                             >
                                 Salvar na Agenda
-                            </a>
+                            </Link>
 
                             <div className="flex gap-4">
-                                <a
+                                <Link
                                     href="#"
                                     className="text-stone-500 hover:text-olive-300 transition-colors"
                                     aria-label="Instagram"
                                 >
                                     <Instagram size={18} />
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="#"
                                     className="text-stone-500 hover:text-olive-300 transition-colors"
                                     aria-label="Email"
                                 >
                                     <Mail size={18} />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

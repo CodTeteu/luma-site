@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Monitor, Smartphone } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
+import Link from "next/link";
 
 const cases = [
     {
@@ -93,7 +94,7 @@ export function PortfolioSection() {
                                 </div>
                                 <h3 className="text-xl font-medium text-[#2A3B2E] mb-2">{project.style}</h3>
                                 <p className="text-gray-500 text-sm leading-relaxed mb-6">{project.desc}</p>
-                                <a
+                                <Link
                                     href={siteConfig.links.briefing}
                                     className="inline-flex items-center text-[#C19B58] hover:text-[#b08d4b] text-sm font-medium"
                                 >
@@ -102,7 +103,7 @@ export function PortfolioSection() {
                                         size={14}
                                         className="ml-1 group-hover:translate-x-1 transition-transform"
                                     />
-                                </a>
+                                </Link>
                             </div>
                         </motion.div>
                     ))}

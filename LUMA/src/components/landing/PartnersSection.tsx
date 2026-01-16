@@ -46,11 +46,14 @@ export function PartnersSection() {
                         <span>Para Cerimonialistas</span>
                     </div>
 
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium mb-4 font-[family-name:var(--font-heading)] leading-tight text-[#C19B58]">
+                    <h2
+                        className="text-3xl md:text-4xl lg:text-5xl font-medium mb-4 font-[family-name:var(--font-heading)] leading-tight text-[#EAD1A2]"
+                        style={{ color: '#EAD1A2' }}
+                    >
                         Seja um Parceiro {siteConfig.name}
                     </h2>
 
-                    <p className="text-white/70 text-base leading-relaxed mb-8 max-w-lg">
+                    <p className="text-white/90 text-base leading-relaxed mb-8 max-w-lg">
                         Facilite a gestão dos seus eventos com nossa plataforma. Ofereça
                         tecnologia de ponta para seus noivos com condições exclusivas e
                         benefícios reais para o seu negócio.
@@ -63,10 +66,13 @@ export function PartnersSection() {
                                     <Check size={12} className="text-[#1A251D]" strokeWidth={3} />
                                 </div>
                                 <div>
-                                    <h3 className="text-base font-medium text-white group-hover:text-[#C19B58] transition-colors">
+                                    <h3
+                                        className="text-base font-medium text-white group-hover:text-[#C19B58] transition-colors"
+                                        style={{ color: '#FFFFFF' }}
+                                    >
                                         {item.title}
                                     </h3>
-                                    <p className="text-xs text-white/80 leading-relaxed">
+                                    <p className="text-xs text-white/95 leading-relaxed">
                                         {item.desc}
                                     </p>
                                 </div>
@@ -100,10 +106,10 @@ export function PartnersSection() {
                                 <div className="flex items-baseline gap-2 text-[#C19B58]">
                                     <span className="text-6xl font-[family-name:var(--font-heading)]">Zero</span>
                                 </div>
-                                <p className="text-xs font-medium tracking-widest text-white/60 uppercase mt-2 border-l-2 border-[#C19B58] pl-3">
+                                <p className="text-xs font-medium tracking-widest text-[#EAD1A2] uppercase mt-2 border-l-2 border-[#C19B58] pl-3">
                                     Custo para ingressar
                                 </p>
-                                <p className="mt-3 text-white/80 text-xs leading-relaxed">
+                                <p className="mt-3 text-white/95 text-xs leading-relaxed">
                                     Não há taxas de adesão ou mensalidades para parceiros. Você só ganha.
                                 </p>
                             </div>
@@ -112,10 +118,10 @@ export function PartnersSection() {
                                 <div className="flex items-baseline gap-2 text-[#C19B58]">
                                     <span className="text-6xl font-[family-name:var(--font-heading)]">24h</span>
                                 </div>
-                                <p className="text-xs font-medium tracking-widest text-white/60 uppercase mt-2 border-l-2 border-[#C19B58] pl-3">
+                                <p className="text-xs font-medium tracking-widest text-[#EAD1A2] uppercase mt-2 border-l-2 border-[#C19B58] pl-3">
                                     Suporte via WhatsApp
                                 </p>
-                                <p className="mt-3 text-white/80 text-xs leading-relaxed">
+                                <p className="mt-3 text-white/95 text-xs leading-relaxed">
                                     Equipe dedicada para atender você e seus clientes a qualquer momento.
                                 </p>
                             </div>
@@ -126,14 +132,14 @@ export function PartnersSection() {
                                         <Star key={n} size={14} className="text-[#C19B58]" fill="currentColor" />
                                     ))}
                                 </div>
-                                <p className="italic text-base text-white/80 font-[family-name:var(--font-heading)] leading-snug">
+                                <p className="italic text-base text-white font-[family-name:var(--font-heading)] leading-snug">
                                     &quot;A equipe da {siteConfig.name} resolve tudo no WhatsApp, meus noivos adoram a agilidade e o design.&quot;
                                 </p>
                                 <div className="flex items-center gap-3 mt-4">
                                     <div className="w-8 h-8 rounded-full bg-[#C19B58]/20 flex items-center justify-center text-[#C19B58] font-bold text-base">C</div>
                                     <div>
                                         <p className="text-xs font-bold text-white">Carla M.</p>
-                                        <p className="text-[10px] text-white/40 uppercase tracking-wider">Assessora de Casamentos</p>
+                                        <p className="text-[10px] text-white/70 uppercase tracking-wider">Assessora de Casamentos</p>
                                     </div>
                                 </div>
                             </div>

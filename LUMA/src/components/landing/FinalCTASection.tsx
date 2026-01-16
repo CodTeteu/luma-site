@@ -2,6 +2,7 @@
 
 import { siteConfig } from "@/config/site.config";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 /**
  * Final Call-to-Action section before footer.
@@ -35,7 +36,7 @@ export function FinalCTASection() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                        <a
+                        <Link
                             href={siteConfig.links.login}
                             className="group relative bg-[#F7F5F0] text-[#8E7036] px-10 py-4 text-base font-bold rounded-full shadow-lg hover:shadow-2xl hover:bg-white transition-all duration-300 overflow-hidden"
                         >
@@ -43,14 +44,14 @@ export function FinalCTASection() {
                                 Iniciar Agora
                                 <ArrowRight size={18} className="w-0 group-hover:w-5 opacity-0 group-hover:opacity-100 transition-all duration-300" />
                             </span>
-                        </a>
+                        </Link>
 
-                        <a
+                        <Link
                             href={siteConfig.contact.whatsapp.getUrl()}
                             className="text-white font-medium hover:text-[#F7F5F0] transition-colors border-b border-white/30 hover:border-white pb-0.5 text-sm"
                         >
                             Falar com consultor
-                        </a>
+                        </Link>
                     </div>
 
                     <p className="mt-6 text-white/60 text-xs uppercase tracking-widest">

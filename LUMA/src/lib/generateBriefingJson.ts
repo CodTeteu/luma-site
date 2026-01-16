@@ -32,6 +32,8 @@ const styleLabels: Record<string, string> = {
     rustico: "Rústico",
     minimalista: "Minimalista",
     moderno: "Moderno",
+    boho: "Boho Chic",
+    praia: "Praia/Tropical",
 };
 
 const pixKeyTypeLabels: Record<string, string> = {

@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { MessageCircle, Sparkles, Star, Check, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import { MessageCircle, Sparkles, Check, ChevronDown } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
 
 /**
@@ -43,25 +44,29 @@ export function HeroSection() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4">
-                        <motion.a
-                            href={siteConfig.links.login}
-                            className="inline-flex items-center justify-center gap-3 bg-[#C19B58] text-white px-8 py-4 text-lg font-medium tracking-wide rounded-lg shadow-xl shadow-[#C19B58]/30 hover:bg-[#b08d4b] transition-all"
-                            whileHover={{ y: -2 }}
-                            whileTap={{ scale: 0.98 }}
-                        >
-                            <Sparkles size={20} />
-                            Iniciar meu Projeto
-                        </motion.a>
-                        <motion.a
+                        <Link href={siteConfig.links.login}>
+                            <motion.div
+                                className="inline-flex items-center justify-center gap-3 bg-[#C19B58] text-white px-8 py-4 text-lg font-medium tracking-wide rounded-lg shadow-xl shadow-[#C19B58]/30 hover:bg-[#b08d4b] transition-all"
+                                whileHover={{ y: -2 }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                <Sparkles size={20} />
+                                Iniciar meu Projeto
+                            </motion.div>
+                        </Link>
+                        <Link
                             href={siteConfig.contact.whatsapp.getUrl()}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 text-[#2A3B2E] bg-white/50 border border-[#2A3B2E]/10 px-8 py-4 text-lg font-medium rounded-lg hover:bg-white hover:border-[#C19B58] transition-all"
-                            whileHover={{ y: -2 }}
                         >
-                            <MessageCircle size={18} />
-                            Falar com Consultora
-                        </motion.a>
+                            <motion.div
+                                className="inline-flex items-center justify-center gap-2 text-[#2A3B2E] bg-white/50 border border-[#2A3B2E]/10 px-8 py-4 text-lg font-medium rounded-lg hover:bg-white hover:border-[#C19B58] transition-all"
+                                whileHover={{ y: -2 }}
+                            >
+                                <MessageCircle size={18} />
+                                Falar com Consultora
+                            </motion.div>
+                        </Link>
                     </div>
 
 

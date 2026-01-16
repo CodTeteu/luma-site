@@ -1,6 +1,7 @@
 "use client";
 
 import { Edit } from "lucide-react";
+import Image from "next/image";
 
 interface EditableImageProps {
     src: string;
@@ -24,7 +25,7 @@ export default function EditableImage({ src, alt, field, className }: EditableIm
             className={`relative group cursor-pointer ${className}`}
             onClick={handleClick}
         >
-            <img src={src} alt={alt} className="w-full h-full object-cover" />
+            <Image src={src} alt={alt} fill className="object-cover" unoptimized />
 
             {/* Overlay on hover */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">

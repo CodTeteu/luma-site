@@ -1,6 +1,7 @@
 "use client";
 
 import EditorSidebar from "@/components/editor/EditorSidebar";
+import { ToastContainer } from "@/components/ui/Toast";
 import { ArrowLeft, Monitor, Smartphone, ExternalLink } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { TemplateData, defaultTemplateData } from "@/types/template";
@@ -13,20 +14,16 @@ export default function EditorPage() {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const activeImageField = useRef<string | null>(null);
 
-    const handleDataChange = (field: keyof TemplateData | string, value: TemplateData[keyof TemplateData]) => {
-        setData(prev => {
-            if (field.includes('.')) {
-                const [parent, child] = field.split('.');
-                return {
-                    ...prev,
-                    [parent]: {
-                        ...((prev as unknown as Record<string, Record<string, unknown>>)[parent]),
-                        [child]: value
-                    }
-                };
-            }
-            return { ...prev, [field]: value };
-        });
+    const handleDataChange = <K extends keyof TemplateData>(field: K, value: TemplateData[K]) => {
+        setData(prev => ({ ...prev, [field]: value }));
+
+        // Sync with iframe
+        if (iframeRef.current?.contentWindow) {
+            iframeRef.current.contentWindow.postMessage({
+                type: 'UPDATE_DATA',
+                payload: { ...data, [field]: value }
+            }, '*');
+        }
     };
 
     // Handle messages from iframe (EditableText updates, Image clicks)
@@ -60,6 +57,18 @@ export default function EditorPage() {
         }
     }, [data]);
 
+    // Forward highlight messages to iframe
+    useEffect(() => {
+        const handleHighlightMessage = (event: MessageEvent) => {
+            if (event.data?.type === 'HIGHLIGHT') {
+                iframeRef.current?.contentWindow?.postMessage(event.data, '*');
+            }
+        };
+
+        window.addEventListener('message', handleHighlightMessage);
+        return () => window.removeEventListener('message', handleHighlightMessage);
+    }, []);
+
     const handleIframeLoad = () => {
         if (iframeRef.current?.contentWindow) {
             iframeRef.current.contentWindow.postMessage({ type: 'UPDATE_DATA', payload: data }, '*');
@@ -70,7 +79,20 @@ export default function EditorPage() {
         const file = e.target.files?.[0];
         if (file && activeImageField.current) {
             const imageUrl = URL.createObjectURL(file);
-            handleDataChange(activeImageField.current as keyof TemplateData, imageUrl);
+            // Handle nested fields
+            const field = activeImageField.current;
+            if (field.includes('.')) {
+                const [parent, child] = field.split('.');
+                const currentParent = data[parent as keyof TemplateData];
+                if (typeof currentParent === 'object' && currentParent !== null) {
+                    setData(prev => ({
+                        ...prev,
+                        [parent]: { ...currentParent, [child]: imageUrl }
+                    }));
+                }
+            } else {
+                setData(prev => ({ ...prev, [field]: imageUrl }));
+            }
             // Reset input
             e.target.value = '';
         }
@@ -78,6 +100,9 @@ export default function EditorPage() {
 
     return (
         <div className="flex h-screen bg-[#F7F5F0] overflow-hidden font-sans">
+            {/* Toast Container for notifications */}
+            <ToastContainer />
+
             {/* Hidden File Input for Image Uploads */}
             <input
                 type="file"
@@ -122,9 +147,9 @@ export default function EditorPage() {
                     </div>
 
                     <div className="absolute right-6 flex items-center gap-2">
-                        <a href="/preview/template1" target="_blank" className="text-xs font-medium text-[#6B7A6C] hover:text-[#C19B58] flex items-center gap-1 transition-colors">
+                        <Link href="/preview/template1" target="_blank" className="text-xs font-medium text-[#6B7A6C] hover:text-[#C19B58] flex items-center gap-1 transition-colors">
                             Ver ao vivo <ExternalLink size={12} />
-                        </a>
+                        </Link>
                     </div>
                 </div>
 

@@ -1,4 +1,6 @@
 import { Car, MapPin } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Accommodations = () => {
     return (
@@ -12,33 +14,37 @@ const Accommodations = () => {
                             {/* Hotel 1 */}
                             <div className="bg-white p-5 border border-stone-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
                                 <div className="h-40 mb-4 overflow-hidden bg-stone-100 relative">
-                                    <img
+                                    <Image
                                         src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
                                         alt="Hotel Spa do Vinho"
+                                        unoptimized
                                     />
                                 </div>
                                 <h3 className="text-lg font-serif text-stone-800 mb-1">Hotel Spa do Vinho</h3>
                                 <div className="flex items-center gap-2 text-stone-500 text-[10px] mb-3 uppercase tracking-wider">
                                     <MapPin size={12} /> 5 min do local
                                 </div>
-                                <a href="#" className="block w-full py-2 border border-stone-200 text-center uppercase text-[10px] tracking-widest font-medium text-stone-600 hover:bg-stone-800 hover:text-white transition-colors">Reservar</a>
+                                <Link href="#" className="block w-full py-2 border border-stone-200 text-center uppercase text-[10px] tracking-widest font-medium text-stone-600 hover:bg-stone-800 hover:text-white transition-colors">Reservar</Link>
                             </div>
 
                             {/* Hotel 2 */}
                             <div className="bg-white p-5 border border-stone-100 shadow-sm hover:shadow-lg transition-all duration-300 group">
                                 <div className="h-40 mb-4 overflow-hidden bg-stone-100 relative">
-                                    <img
+                                    <Image
                                         src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                                        fill
+                                        className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
                                         alt="Pousada Castello"
+                                        unoptimized
                                     />
                                 </div>
                                 <h3 className="text-lg font-serif text-stone-800 mb-1">Pousada Castello</h3>
                                 <div className="flex items-center gap-2 text-stone-500 text-[10px] mb-3 uppercase tracking-wider">
                                     <MapPin size={12} /> 10 min do local
                                 </div>
-                                <a href="#" className="block w-full py-2 border border-stone-200 text-center uppercase text-[10px] tracking-widest font-medium text-stone-600 hover:bg-stone-800 hover:text-white transition-colors">Reservar</a>
+                                <Link href="#" className="block w-full py-2 border border-stone-200 text-center uppercase text-[10px] tracking-widest font-medium text-stone-600 hover:bg-stone-800 hover:text-white transition-colors">Reservar</Link>
                             </div>
 
                             {/* Transport Option - Very Compact */}

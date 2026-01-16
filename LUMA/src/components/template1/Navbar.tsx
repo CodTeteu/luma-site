@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { TemplateData } from '@/types/template';
 
 interface NavbarProps {
@@ -68,7 +69,7 @@ const Navbar = ({ data }: NavbarProps) => {
                         className={`hidden md:flex items-center gap-8 ${scrolled ? 'ml-12' : ''}`}
                     >
                         {navLinks.map((link) => (
-                            <a
+                            <Link
                                 key={link.name}
                                 href={link.href}
                                 className={`text-[10px] uppercase tracking-[0.25em] font-medium transition-all duration-300 hover:text-olive-300 relative group ${scrolled ? 'text-stone-600' : 'text-stone-200'
@@ -76,7 +77,7 @@ const Navbar = ({ data }: NavbarProps) => {
                             >
                                 {link.name}
                                 <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-olive-300 transition-all duration-300 group-hover:w-full opacity-0 group-hover:opacity-100"></span>
-                            </a>
+                            </Link>
                         ))}
                     </motion.div>
 
@@ -103,14 +104,14 @@ const Navbar = ({ data }: NavbarProps) => {
                     >
                         <div className="flex flex-col items-center space-y-4">
                             {navLinks.map((link) => (
-                                <a
+                                <Link
                                     key={link.name}
                                     href={link.href}
                                     onClick={() => setIsOpen(false)}
                                     className="text-xs uppercase tracking-[0.2em] font-medium text-stone-600 hover:text-olive-600"
                                 >
                                     {link.name}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </motion.div>

@@ -18,7 +18,6 @@ const Hero = ({ data }: HeroProps) => {
     const formatDate = (dateString: string) => {
         if (!dateString) return "";
         try {
-            const date = new Date(dateString);
             // Simple fallback parsing to avoid timezone issues with pure dates
             const [year, month, day] = dateString.split('-');
             const months = [
@@ -26,7 +25,7 @@ const Hero = ({ data }: HeroProps) => {
                 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
             ];
             return `${day} de ${months[parseInt(month) - 1]} de ${year}`;
-        } catch (e) {
+        } catch {
             return dateString;
         }
     };

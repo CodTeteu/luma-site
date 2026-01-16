@@ -1,7 +1,7 @@
 "use client";
 
 import { UseFormReturn } from "react-hook-form";
-import { Heart, MapPin, Calendar, Clock } from "lucide-react";
+import { MapPin, Calendar, Clock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BriefingFormData } from "@/lib/briefingSchema";

@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { MapPin, Clock, Calendar } from 'lucide-react';
+import { MapPin, Clock } from 'lucide-react';
 import { TemplateData } from '@/types/template';
 import EditableText from '@/components/editor/EditableText';
+import Link from 'next/link';
 
 interface CeremonyProps {
     data?: TemplateData;
@@ -62,9 +63,9 @@ const Ceremony = ({ data }: CeremonyProps) => {
                             <p className="text-stone-500 text-sm text-center md:text-right">Rua das Flores, 123 - Cidade Jardim</p>
                         </div>
 
-                        <a href="#" className="mt-8 text-xs uppercase tracking-widest text-olive-400 hover:text-white border-b border-olive-400/30 hover:border-white pb-1 transition-all">
+                        <Link href="#" className="mt-8 text-xs uppercase tracking-widest text-olive-400 hover:text-white border-b border-olive-400/30 hover:border-white pb-1 transition-all">
                             Ver no Mapa
-                        </a>
+                        </Link>
                     </motion.div>
 
                     {/* Reception Card */}
@@ -91,9 +92,9 @@ const Ceremony = ({ data }: CeremonyProps) => {
                             <p className="text-stone-500 text-sm text-center md:text-left">Avenida Principal, 500 - Centro</p>
                         </div>
 
-                        <a href="#" className="mt-8 text-xs uppercase tracking-widest text-olive-400 hover:text-white border-b border-olive-400/30 hover:border-white pb-1 transition-all">
+                        <Link href="#" className="mt-8 text-xs uppercase tracking-widest text-olive-400 hover:text-white border-b border-olive-400/30 hover:border-white pb-1 transition-all">
                             Ver no Mapa
-                        </a>
+                        </Link>
                     </motion.div>
                 </div>
             </div>

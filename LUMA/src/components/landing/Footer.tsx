@@ -11,7 +11,7 @@ export function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-[#121A15] text-white/60 py-12 px-6 text-sm relative border-t border-white/5">
+        <footer className="bg-[#121A15] text-white/80 py-12 px-6 text-sm relative border-t border-white/5">
             {/* Decorative top gradient */}
             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#C19B58]/30 to-transparent" />
 
@@ -21,7 +21,7 @@ export function Footer() {
                     <span className="text-2xl text-white font-bold tracking-widest font-[family-name:var(--font-heading)] block">
                         {siteConfig.name}
                     </span>
-                    <p className="leading-relaxed max-w-xs text-white/50 text-xs">
+                    <p className="leading-relaxed max-w-xs text-white/70 text-xs">
                         {siteConfig.description}. Tecnologia e design para casamentos inesquecíveis.
                     </p>
                     <div className="flex gap-3">
@@ -33,7 +33,7 @@ export function Footer() {
 
                 {/* Product Column */}
                 <div>
-                    <h4 className="text-white font-medium mb-4 uppercase tracking-wider text-[10px] opacity-100">Produto</h4>
+                    <h4 className="text-white/95 font-medium mb-4 uppercase tracking-wider text-[10px] opacity-100">Produto</h4>
                     <ul className="space-y-2">
                         <FooterLink href="#hero">Início</FooterLink>
                         <FooterLink href="#como-funciona">Como Funciona</FooterLink>
@@ -45,7 +45,7 @@ export function Footer() {
 
                 {/* Company Column */}
                 <div>
-                    <h4 className="text-white font-medium mb-4 uppercase tracking-wider text-[10px] opacity-100">Empresa</h4>
+                    <h4 className="text-white/95 font-medium mb-4 uppercase tracking-wider text-[10px] opacity-100">Empresa</h4>
                     <ul className="space-y-2">
                         <FooterLink href="#">Sobre Nós</FooterLink>
                         <FooterLink href="#">Carreiras</FooterLink>
@@ -56,24 +56,24 @@ export function Footer() {
 
                 {/* Legal Column */}
                 <div>
-                    <h4 className="text-white font-medium mb-4 uppercase tracking-wider text-[10px] opacity-100">Legal</h4>
+                    <h4 className="text-white/95 font-medium mb-4 uppercase tracking-wider text-[10px] opacity-100">Legal</h4>
                     <ul className="space-y-2">
                         <FooterLink href="#">Termos de Uso</FooterLink>
                         <FooterLink href="#">Política de Privacidade</FooterLink>
                         <FooterLink href="#">Política de Cookies</FooterLink>
                         <div className="pt-3 mt-3 border-t border-white/5">
-                            <a
+                            <Link
                                 href={siteConfig.links.login}
-                                className="inline-flex items-center gap-2 text-[#C19B58] hover:text-[#D4AF6A] transition-colors text-xs"
+                                className="inline-flex items-center gap-2 text-[#EAD1A2] hover:text-[#C19B58] transition-colors text-xs"
                             >
                                 Área do Cliente <ArrowUpRight size={12} />
-                            </a>
+                            </Link>
                         </div>
                     </ul>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] opacity-40">
+            <div className="max-w-7xl mx-auto pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-3 text-[10px] opacity-70">
                 <p>
                     © {currentYear} {siteConfig.name} Ltda. Todos os direitos reservados.
                 </p>
@@ -97,14 +97,14 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 
 function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
     return (
-        <a
+        <Link
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/60 hover:text-[#C19B58] hover:bg-white/10 transition-all"
+            className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-white/80 hover:text-[#C19B58] hover:bg-white/10 transition-all"
             aria-label={label}
         >
             {icon}
-        </a>
+        </Link>
     );
 }
