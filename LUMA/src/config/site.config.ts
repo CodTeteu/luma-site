@@ -1,0 +1,64 @@
+/**
+ * Site Configuration
+ * Centralized configuration for all external links, contact info, and metadata.
+ * ============================================================================
+ */
+
+export const siteConfig = {
+  name: "LUMA",
+  tagline: "Conciergerie Digital",
+  description: "Tecnologia e Design para casamentos inesquecíveis.",
+
+  // Contact
+  contact: {
+    whatsapp: {
+      number: "5511999999999",
+      displayText: "Fale no WhatsApp",
+      getUrl: (message?: string) => {
+        const baseUrl = `https://wa.me/${siteConfig.contact.whatsapp.number}`;
+        return message ? `${baseUrl}?text=${encodeURIComponent(message)}` : baseUrl;
+      },
+    },
+  },
+
+  // External Links
+  links: {
+    instagram: "#",
+    login: "/login",
+    briefing: "/briefing",
+  },
+
+  // Navigation
+  navigation: {
+    main: [
+      { label: "Como Funciona", href: "#como-funciona" },
+      { label: "Portfólio", href: "#portfolio" },
+      { label: "Sobre", href: "#sobre" },
+      { label: "Dúvidas", href: "#duvidas" },
+    ],
+  },
+
+  // SEO & Metadata
+  metadata: {
+    title: "LUMA | Seu Site de Casamento Cuidado por Especialistas",
+    description:
+      "Convites digitais premium para casamentos. Preencha nosso briefing e nossa equipe cria tudo para você.",
+    keywords: ["casamento", "convite digital", "wedding", "RSVP", "lista de presentes"],
+  },
+
+  // Business Stats (for landing page)
+  stats: {
+    yearsExperience: "8+",
+    weddingsCompleted: "4.5k",
+    averageRating: "5.0",
+    countriesServed: "12",
+    couplesServed: "+150",
+  },
+
+  // Footer
+  footer: {
+    copyright: `© ${new Date().getFullYear()} LUMA Studio. Todos os direitos reservados.`,
+  },
+} as const;
+
+export type SiteConfig = typeof siteConfig;
