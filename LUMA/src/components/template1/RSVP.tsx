@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, ChevronRight, ChevronLeft, Music, Check, MessageSquare } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 import { logger } from '@/services/logger';
 import { addRSVP } from '@/services/mockStorage';
@@ -62,6 +63,16 @@ const RSVP = () => {
         }
 
         setSubmitted(true);
+
+        // Fire confetti celebration!
+        if (formData.isAttending === 'sim') {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#5c6b5d', '#C19B58', '#2A3B2E', '#F7F5F0']
+            });
+        }
     };
 
     const nextStep = () => setStep((s) => Math.min(s + 1, 3));

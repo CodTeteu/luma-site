@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShoppingBag, Trash2, Plus, Minus, MessageCircle, Heart } from "lucide-react";
+import confetti from "canvas-confetti";
 import { useCart } from "@/contexts/CartContext";
 
 interface CheckoutModalProps {
@@ -25,6 +26,32 @@ export default function CheckoutModal({ whatsappNumber, coupleName = "os noivos"
     };
 
     const handleCheckout = () => {
+        // Fire fireworks celebration!
+        const duration = 2 * 1000;
+        const end = Date.now() + duration;
+
+        const frame = () => {
+            confetti({
+                particleCount: 5,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: ['#C19B58', '#5c6b5d', '#2A3B2E']
+            });
+            confetti({
+                particleCount: 5,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: ['#C19B58', '#5c6b5d', '#2A3B2E']
+            });
+
+            if (Date.now() < end) {
+                requestAnimationFrame(frame);
+            }
+        };
+        frame();
+
         const link = generateWhatsAppLink();
         window.open(link, "_blank");
         clearCart();
