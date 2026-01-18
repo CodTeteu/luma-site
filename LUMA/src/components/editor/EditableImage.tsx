@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Edit } from "lucide-react";
-import Image from "next/image";
+import React from 'react';
+import Image from 'next/image';
 
 interface EditableImageProps {
     src: string;
@@ -10,29 +10,20 @@ interface EditableImageProps {
     className?: string;
 }
 
-export default function EditableImage({ src, alt, field, className }: EditableImageProps) {
-    const handleClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        window.parent.postMessage({
-            type: "REQUEST_IMAGE_CHANGE",
-            field
-        }, "*");
-    };
-
+const EditableImage: React.FC<EditableImageProps> = ({
+    src,
+    alt,
+    className = '',
+}) => {
     return (
-        <div
-            className={`relative group cursor-pointer ${className}`}
-            onClick={handleClick}
-        >
-            <Image src={src} alt={alt} fill className="object-cover" unoptimized />
-
-            {/* Overlay on hover */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                <div className="opacity-0 group-hover:opacity-100 bg-white/90 p-2 rounded-full shadow-lg transition-opacity">
-                    <Edit size={20} className="text-gray-700" />
-                </div>
-            </div>
-        </div>
+        <Image
+            src={src}
+            alt={alt}
+            className={className}
+            fill
+            style={{ objectFit: 'cover' }}
+        />
     );
-}
+};
+
+export default EditableImage;
