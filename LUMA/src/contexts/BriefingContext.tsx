@@ -58,21 +58,21 @@ export function BriefingProvider({ children }: { children: ReactNode }) {
         setIsLoaded(true);
     }, []);
 
-    // Save to localStorage whenever data changes
-    useEffect(() => {
-        if (isLoaded && briefingData) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(briefingData));
-        }
-    }, [briefingData, isLoaded]);
-
     const setBriefingData = useCallback((data: BriefingData) => {
         setBriefingDataState(data);
+        if (typeof window !== "undefined") {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
     }, []);
 
     const updateBriefingData = useCallback((updates: Partial<BriefingData>) => {
         setBriefingDataState((prev) => {
             if (!prev) return null;
-            return { ...prev, ...updates };
+            const newData = { ...prev, ...updates };
+            if (typeof window !== "undefined") {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+            }
+            return newData;
         });
     }, []);
 

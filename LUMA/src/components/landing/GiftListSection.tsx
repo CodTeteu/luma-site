@@ -44,8 +44,8 @@ export function GiftListSection() {
                                 <span className="italic text-[#C19B58]">Mais Elegância, Zero Taxas</span>
                             </h2>
                             <p className="text-lg text-gray-600 leading-relaxed">
-                                Transformamos a tradicional "lista de presentes em dinheiro" em uma experiência elegante para seus convidados.
-                                Nossa plataforma simula uma loja virtual onde cada "presente" comprado é, na verdade, uma transferência PIX direto para você.
+                                Transformamos a tradicional &quot;lista de presentes em dinheiro&quot; em uma experiência elegante para seus convidados.
+                                Nossa plataforma simula uma loja virtual onde cada &quot;presente&quot; comprado é, na verdade, uma transferência PIX direto para você.
                             </p>
                         </motion.div>
 
@@ -107,7 +107,7 @@ export function GiftListSection() {
                                     <span className="text-sm font-medium text-gray-500">Status em Tempo Real</span>
                                 </div>
                                 <p className="font-serif text-lg text-[#1A1A1A]">
-                                    "Recebemos um presente de R$ 500!"
+                                    &quot;Recebemos um presente de R$ 500!&quot;
                                 </p>
                                 <p className="text-xs text-gray-400 mt-1">
                                     Notificação instantânea para os noivos

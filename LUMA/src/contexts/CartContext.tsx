@@ -41,27 +41,31 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setIsHydrated(true);
     }, []);
 
-    // Persist cart to sessionStorage
-    useEffect(() => {
-        if (isHydrated) {
-            sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
-        }
-    }, [items, isHydrated]);
-
     const addToCart = useCallback((item: GiftItem) => {
         setItems((prev) => {
             const existingIndex = prev.findIndex((i) => i.id === item.id);
+            let updated;
             if (existingIndex >= 0) {
-                const updated = [...prev];
+                updated = [...prev];
                 updated[existingIndex].quantity += 1;
-                return updated;
+            } else {
+                updated = [...prev, { ...item, quantity: 1 }];
             }
-            return [...prev, { ...item, quantity: 1 }];
+            if (typeof window !== "undefined") {
+                sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updated));
+            }
+            return updated;
         });
     }, []);
 
     const removeFromCart = useCallback((itemId: string) => {
-        setItems((prev) => prev.filter((item) => item.id !== itemId));
+        setItems((prev) => {
+            const updated = prev.filter((item) => item.id !== itemId);
+            if (typeof window !== "undefined") {
+                sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updated));
+            }
+            return updated;
+        });
     }, []);
 
     const updateQuantity = useCallback((itemId: string, quantity: number) => {
@@ -69,15 +73,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
             removeFromCart(itemId);
             return;
         }
-        setItems((prev) =>
-            prev.map((item) =>
+        setItems((prev) => {
+            const updated = prev.map((item) =>
                 item.id === itemId ? { ...item, quantity } : item
-            )
-        );
+            );
+            if (typeof window !== "undefined") {
+                sessionStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updated));
+            }
+            return updated;
+        });
     }, [removeFromCart]);
 
     const clearCart = useCallback(() => {
         setItems([]);
+        if (typeof window !== "undefined") {
+            sessionStorage.removeItem(CART_STORAGE_KEY);
+        }
     }, []);
 
     const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);

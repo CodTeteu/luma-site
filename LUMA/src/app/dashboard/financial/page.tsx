@@ -9,7 +9,6 @@ import {
     Copy,
     Check,
     DollarSign,
-    Clock,
     TrendingUp,
     RefreshCw
 } from "lucide-react";
@@ -48,6 +47,7 @@ export default function FinancialPage() {
     };
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         loadData();
 
         const handleStorageUpdate = () => loadData();

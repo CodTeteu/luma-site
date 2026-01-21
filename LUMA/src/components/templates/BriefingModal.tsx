@@ -7,10 +7,7 @@ import {
     X,
     Heart,
     Calendar,
-    MapPin,
-    Users,
     Palette,
-    MessageCircle,
     ChevronRight,
     ChevronLeft,
     Check,
@@ -74,6 +71,7 @@ export function BriefingModal({ isOpen, onClose, template }: BriefingModalProps)
 
     useEffect(() => {
         if (isOpen) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setCurrentStep(1);
             setFormData(initialFormData);
         }
@@ -368,8 +366,8 @@ export function BriefingModal({ isOpen, onClose, template }: BriefingModalProps)
                                     onClick={nextStep}
                                     disabled={!isStepValid()}
                                     className={`flex-1 h-12 rounded-xl font-semibold text-[15px] flex items-center justify-center gap-2 transition-all ${isStepValid()
-                                            ? "bg-[#2A3B2E] text-white active:bg-[#1a261d]"
-                                            : "bg-[#E5E0D6] text-[#6B7A6C]"
+                                        ? "bg-[#2A3B2E] text-white active:bg-[#1a261d]"
+                                        : "bg-[#E5E0D6] text-[#6B7A6C]"
                                         }`}
                                 >
                                     Continuar

@@ -1,0 +1,199 @@
+
+> landingpage@0.1.0 lint
+> eslint --no-color
+
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\app\dashboard\financial\page.tsx
+   8:5  warning  'ArrowUpRight' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-unused-vars
+  12:5  warning  'Clock' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+  51:9  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\app\dashboard\financial\page.tsx:51:9
+  49 |
+  50 |     useEffect(() => {
+> 51 |         loadData();
+     |         ^^^^^^^^ Avoid calling setState() directly within an effect
+  52 |
+  53 |         const handleStorageUpdate = () => loadData();
+  54 |         window.addEventListener("luma-storage-update", handleStorageUpdate);  react-hooks/set-state-in-effect
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\app\dashboard\guests\page.tsx
+  34:25  warning  'setFilterGroup' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  44:9   error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\app\dashboard\guests\page.tsx:44:9
+  42 |
+  43 |     useEffect(() => {
+> 44 |         loadData();
+     |         ^^^^^^^^ Avoid calling setState() directly within an effect
+  45 |
+  46 |         // Listen for storage updates
+  47 |         const handleStorageUpdate = () => loadData();  react-hooks/set-state-in-effect
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\app\dashboard\page.tsx
+   19:5  warning  'AlertCircle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              @typescript-eslint/no-unused-vars
+  104:9  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\app\dashboard\page.tsx:104:9
+  102 |
+  103 |     useEffect(() => {
+> 104 |         setMounted(true);
+      |         ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  105 |     }, []);
+  106 |
+  107 |     // Redirect to templates if no briefing (user needs to purchase)  react-hooks/set-state-in-effect
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\dashboard\Sidebar.tsx
+  107:18  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\dashboard\Sidebar.tsx:107:18
+  105 |             {/* Desktop Sidebar */}
+  106 |             <aside className="fixed left-0 top-0 h-screen w-64 bg-[#F7F5F0] border-r border-[#DCD3C5] hidden md:flex md:flex-col z-30">
+> 107 |                 <NavContent />
+      |                  ^^^^^^^^^^ This component is created during render
+  108 |             </aside>
+  109 |
+  110 |             {/* Mobile Header */}
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\dashboard\Sidebar.tsx:41:24
+   39 |     };
+   40 |
+>  41 |     const NavContent = () => (
+      |                        ^^^^^^^
+>  42 |         <>
+      | ^^^^^^^^^^
+>  43 |             {/* Logo */}
+      ???
+      | ^^^^^^^^^^
+> 100 |         </>
+      | ^^^^^^^^^^
+> 101 |     );
+      | ^^^^^^ The component is created during render here
+  102 |
+  103 |     return (
+  104 |         <>                                  react-hooks/static-components
+  143:30  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\dashboard\Sidebar.tsx:143:30
+  141 |                             className="fixed left-0 top-0 h-screen w-72 bg-[#F7F5F0] z-50 flex flex-col shadow-2xl md:hidden"
+  142 |                         >
+> 143 |                             <NavContent />
+      |                              ^^^^^^^^^^ This component is created during render
+  144 |                         </motion.aside>
+  145 |                     </>
+  146 |                 )}
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\dashboard\Sidebar.tsx:41:24
+   39 |     };
+   40 |
+>  41 |     const NavContent = () => (
+      |                        ^^^^^^^
+>  42 |         <>
+      | ^^^^^^^^^^
+>  43 |             {/* Logo */}
+      ???
+      | ^^^^^^^^^^
+> 100 |         </>
+      | ^^^^^^^^^^
+> 101 |     );
+      | ^^^^^^ The component is created during render here
+  102 |
+  103 |     return (
+  104 |         <>  react-hooks/static-components
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\landing\GiftListSection.tsx
+   47:61  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+   47:92  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+   48:84  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+   48:93  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  110:37  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  110:70  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\landing\PartnersSection.tsx
+  4:38  warning  'ArrowRight' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\landing\PortfolioSection.tsx
+  6:10  warning  'siteConfig' is defined but never used  @typescript-eslint/no-unused-vars
+  8:8   warning  'Image' is defined but never used       @typescript-eslint/no-unused-vars
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\templates\BriefingModal.tsx
+  10:5   warning  'MapPin' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  11:5   warning  'Users' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  13:5   warning  'MessageCircle' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             @typescript-eslint/no-unused-vars
+  77:13  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\components\templates\BriefingModal.tsx:77:13
+  75 |     useEffect(() => {
+  76 |         if (isOpen) {
+> 77 |             setCurrentStep(1);
+     |             ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  78 |             setFormData(initialFormData);
+  79 |         }
+  80 |     }, [isOpen]);  react-hooks/set-state-in-effect
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\contexts\BriefingContext.tsx
+  53:17  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\contexts\BriefingContext.tsx:53:17
+  51 |             if (stored) {
+  52 |                 const parsed = JSON.parse(stored);
+> 53 |                 setBriefingDataState(parsed);
+     |                 ^^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  54 |             }
+  55 |         } catch (e) {
+  56 |             console.error("Failed to parse briefing data:", e);  react-hooks/set-state-in-effect
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\contexts\CartContext.tsx
+  36:17  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\matca\OneDrive\Desktop\landingpage\LUMA\src\contexts\CartContext.tsx:36:17
+  34 |         if (storedCart) {
+  35 |             try {
+> 36 |                 setItems(JSON.parse(storedCart));
+     |                 ^^^^^^^^ Avoid calling setState() directly within an effect
+  37 |             } catch {
+  38 |                 sessionStorage.removeItem(CART_STORAGE_KEY);
+  39 |             }  react-hooks/set-state-in-effect
+
+??? 24 problems (14 errors, 10 warnings)
+
