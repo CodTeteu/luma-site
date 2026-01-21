@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { ArrowLeft, Cookie } from "lucide-react";
 
-export const metadata = {
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
     title: "Política de Cookies | LUMA",
-    description: "Informações sobre o uso de cookies na plataforma LUMA.",
+    description: "Informações sobre o uso de cookies na plataforma LUMA. Saiba como usamos cookies para melhorar sua experiência.",
+    robots: "index, follow",
+    alternates: {
+        canonical: "https://luma.com.br/politica-de-cookies",
+    },
 };
 
 export default function PoliticaDeCookies() {

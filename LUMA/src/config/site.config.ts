@@ -12,7 +12,7 @@ export const siteConfig = {
   // Contact
   contact: {
     whatsapp: {
-      number: "5511999999999",
+      number: "5551985367454",
       displayText: "Fale no WhatsApp",
       getUrl: (message?: string) => {
         const baseUrl = `https://wa.me/${siteConfig.contact.whatsapp.number}`;
@@ -23,11 +23,14 @@ export const siteConfig = {
 
   // External Links
   links: {
-    instagram: "#",
+    instagram: "https://instagram.com/luma.casamentos",
     login: "/login",
     briefing: "/briefing",
     templates: "/templates",
   },
+
+  // Contact Email
+  email: "contato@luma.com.br",
 
   // Navigation
   navigation: {

@@ -12,7 +12,7 @@ import {
     LogOut,
     Menu,
     X,
-    Sparkles
+    Heart
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -52,12 +52,12 @@ export default function Sidebar({ userName = "Noivos" }: SidebarProps) {
             {/* User Info */}
             <div className="px-6 mb-6">
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-[#E5E0D6]/50">
-                    <div className="w-10 h-10 rounded-full bg-[#C19B58]/20 text-[#C19B58] flex items-center justify-center font-bold text-sm">
-                        {userName.charAt(0).toUpperCase()}
+                    <div className="w-10 h-10 rounded-full bg-[#C19B58]/20 text-[#C19B58] flex items-center justify-center">
+                        <Heart size={18} />
                     </div>
                     <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-[#2A3B2E] truncate">{userName}</p>
-                        <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Plano Grátis</p>
+                        <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Seu Casamento</p>
                     </div>
                 </div>
             </div>
@@ -86,22 +86,6 @@ export default function Sidebar({ userName = "Noivos" }: SidebarProps) {
                     );
                 })}
             </nav>
-
-            {/* Upgrade CTA */}
-            <div className="px-4 mb-4">
-                <div className="p-4 rounded-xl bg-gradient-to-br from-[#C19B58]/20 to-[#C19B58]/5 border border-[#C19B58]/20">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Sparkles size={14} className="text-[#C19B58]" />
-                        <span className="text-xs font-bold text-[#C19B58] uppercase tracking-wider">Premium</span>
-                    </div>
-                    <p className="text-xs text-[#3E4A3F] mb-3">
-                        Desbloqueie recursos exclusivos para seu casamento.
-                    </p>
-                    <button className="w-full py-2 bg-[#C19B58] text-white text-xs font-medium rounded-lg hover:bg-[#b08d4b] transition-colors">
-                        Fazer Upgrade
-                    </button>
-                </div>
-            </div>
 
             {/* Logout */}
             <div className="p-4 border-t border-[#DCD3C5]">

@@ -8,9 +8,6 @@ import {
     Lock,
     Calendar,
     MapPin,
-    Sparkles,
-    Crown,
-    Check,
     AlertCircle
 } from "lucide-react";
 import { showToast } from "@/components/ui/Toast";
@@ -177,51 +174,6 @@ export default function SettingsPage() {
                     </div>
                 </motion.div>
             </div>
-
-            {/* Plan & Billing */}
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-gradient-to-br from-[#C19B58]/10 to-[#C19B58]/5 rounded-xl border border-[#C19B58]/20 p-6"
-            >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                    <div className="flex items-start gap-4">
-                        <div className="p-3 rounded-xl bg-[#C19B58]/20">
-                            <Crown size={24} className="text-[#C19B58]" />
-                        </div>
-                        <div>
-                            <h2 className="text-lg font-medium text-[#2A3B2E] font-[family-name:var(--font-heading)]">
-                                Plano & Faturamento
-                            </h2>
-                            <p className="text-sm text-[#6B7A6C] mt-1">
-                                Você está utilizando o <span className="font-medium text-[#2A3B2E]">Plano Grátis</span>
-                            </p>
-                            <div className="flex flex-wrap gap-2 mt-4">
-                                {['Site básico', 'Até 50 convidados', 'Galeria com 6 fotos'].map((feature) => (
-                                    <span
-                                        key={feature}
-                                        className="inline-flex items-center gap-1 px-2 py-1 bg-white/50 border border-[#DCD3C5] rounded-full text-xs text-[#3E4A3F]"
-                                    >
-                                        <Check size={10} className="text-[#C19B58]" />
-                                        {feature}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-3">
-                        <button className="flex items-center justify-center gap-2 px-6 py-3 bg-[#C19B58] text-white rounded-lg font-medium hover:bg-[#b08d4b] transition-colors shadow-lg shadow-[#C19B58]/20">
-                            <Sparkles size={18} />
-                            Fazer Upgrade para Premium
-                        </button>
-                        <p className="text-[10px] text-[#6B7A6C] text-center">
-                            A partir de R$ 97/mês • Cancele quando quiser
-                        </p>
-                    </div>
-                </div>
-            </motion.div>
         </div>
     );
 }

@@ -1,0 +1,27 @@
+{
+    "name": "LUMA - Sites de Casamento",
+    "short_name": "LUMA",
+    "description": "Estúdio de Tecnologia para Casamentos. Sites exclusivos com identidade visual fiel.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#F7F5F0",
+    "theme_color": "#2A3B2E",
+    "icons": [
+        {
+            "src": "/images/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/images/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "categories": [
+        "lifestyle",
+        "social"
+    ],
+    "lang": "pt-BR",
+    "dir": "ltr"
+}

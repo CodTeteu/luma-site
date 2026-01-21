@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { CartProvider } from "@/contexts/CartContext";
-import { PlanProvider } from "@/contexts/PlanContext";
+import { BriefingProvider } from "@/contexts/BriefingContext";
 
 interface ProvidersProps {
     children: ReactNode;
@@ -11,16 +11,16 @@ interface ProvidersProps {
 
 /**
  * Client-side providers wrapper
- * Wraps the app with Error Boundary and context providers for Cart and Plan
+ * Wraps the app with Error Boundary and context providers
  */
 export function Providers({ children }: ProvidersProps) {
     return (
         <ErrorBoundary>
-            <PlanProvider>
-                <CartProvider>
+            <CartProvider>
+                <BriefingProvider>
                     {children}
-                </CartProvider>
-            </PlanProvider>
+                </BriefingProvider>
+            </CartProvider>
         </ErrorBoundary>
     );
 }

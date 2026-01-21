@@ -6,6 +6,16 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Login | LUMA - Área do Cliente",
+    description: "Acesse sua conta LUMA para gerenciar seu site de casamento, acompanhar o RSVP e visualizar presentes recebidos.",
+    robots: "index, follow",
+    alternates: {
+        canonical: "https://luma.com.br/login",
+    },
+};
 
 export default function LoginPage() {
     const [isLogin, setIsLogin] = useState(false); // Default to REGISTER (Start Project)
@@ -123,7 +133,21 @@ export default function LoginPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Senha</label>
+                            <div className="flex items-center justify-between">
+                                <label className="text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Senha</label>
+                                {isLogin && (
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const message = "Olá! Gostaria de recuperar minha senha do LUMA.";
+                                            window.open(`https://wa.me/5551985367454?text=${encodeURIComponent(message)}`, "_blank");
+                                        }}
+                                        className="text-xs text-[#C19B58] hover:underline font-medium"
+                                    >
+                                        Esqueci minha senha
+                                    </button>
+                                )}
+                            </div>
                             <input type="password" className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]" placeholder="••••••••" />
                         </div>
 

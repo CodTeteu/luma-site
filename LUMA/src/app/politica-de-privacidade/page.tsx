@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { ArrowLeft, Shield } from "lucide-react";
 
-export const metadata = {
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
     title: "Política de Privacidade | LUMA",
-    description: "Política de privacidade e proteção de dados da plataforma LUMA.",
+    description: "Política de privacidade e proteção de dados da plataforma LUMA. Em conformidade com a LGPD.",
+    robots: "index, follow",
+    alternates: {
+        canonical: "https://luma.com.br/politica-de-privacidade",
+    },
 };
 
 export default function PoliticaDePrivacidade() {

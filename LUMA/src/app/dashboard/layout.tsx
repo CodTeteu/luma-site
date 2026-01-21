@@ -1,24 +1,29 @@
+"use client";
+
 import Sidebar from "@/components/dashboard/Sidebar";
 import { ToastContainer } from "@/components/ui/Toast";
 import LeafShadowOverlay from "@/components/ui/LeafShadowOverlay";
-
-export const metadata = {
-    title: "Dashboard | LUMA",
-    description: "Gerencie seu casamento com a LUMA",
-};
+import { useBriefing } from "@/contexts/BriefingContext";
 
 export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const { briefingData, hasBriefing } = useBriefing();
+
+    // Get couple name from briefing data or use default
+    const userName = hasBriefing && briefingData
+        ? `${briefingData.brideName} & ${briefingData.groomName}`
+        : "Noivos";
+
     return (
         <div className="min-h-screen bg-[#F7F5F0] font-sans selection:bg-[#C19B58] selection:text-white">
             <LeafShadowOverlay />
             <ToastContainer />
 
             {/* Sidebar Navigation */}
-            <Sidebar userName="Ana & Pedro" />
+            <Sidebar userName={userName} />
 
             {/* Main Content Area */}
             <main className="md:ml-64 pt-16 md:pt-0 min-h-screen relative z-10">

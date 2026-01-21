@@ -1,9 +1,15 @@
 import Link from "next/link";
 import { ArrowLeft, FileText } from "lucide-react";
 
-export const metadata = {
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
     title: "Termos de Uso | LUMA",
-    description: "Termos e condições de uso da plataforma LUMA.",
+    description: "Termos e condições de uso da plataforma LUMA para sites de casamento.",
+    robots: "index, follow",
+    alternates: {
+        canonical: "https://luma.com.br/termos-de-uso",
+    },
 };
 
 export default function TermosDeUso() {
