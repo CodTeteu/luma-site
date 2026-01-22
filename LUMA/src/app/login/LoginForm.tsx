@@ -1,24 +1,104 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 
 export default function LoginForm() {
-    const [isLogin, setIsLogin] = useState(false); // Default to REGISTER (Start Project)
+    const [isLogin, setIsLogin] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    const handleAuth = (e: React.FormEvent) => {
+    const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault();
-        // In a real app, validation and auth logic here
-        router.push('/dashboard');
+        setError(null);
+        setIsLoading(true);
+
+        const supabase = createClient();
+
+        // If Supabase is not configured, use localStorage fallback (dev mode)
+        if (!supabase) {
+            console.warn("SUPABASE NOT CONFIGURED: Using localStorage fallback for auth");
+            // Store basic user info in localStorage for dev purposes
+            localStorage.setItem("luma_dev_user", JSON.stringify({ email, name, phone }));
+            router.push("/dashboard");
+            return;
+        }
+
+        try {
+            if (isLogin) {
+                // Login with email/password
+                const { error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                });
+
+                if (error) {
+                    if (error.message.includes("Invalid login")) {
+                        setError("Email ou senha incorretos.");
+                    } else if (error.message.includes("Email not confirmed")) {
+                        setError("Por favor, confirme seu email antes de fazer login. Verifique sua caixa de entrada.");
+                    } else {
+                        setError(error.message);
+                    }
+                    return;
+                }
+
+                // Success - redirect to dashboard
+                router.push("/dashboard");
+                router.refresh();
+            } else {
+                // Register new user
+                const { data, error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            name,
+                            phone,
+                        },
+                        emailRedirectTo: `${window.location.origin}/login?confirmed=true`,
+                    },
+                });
+
+                if (error) {
+                    if (error.message.includes("already registered")) {
+                        setError("Este email já está cadastrado. Faça login.");
+                    } else {
+                        setError(error.message);
+                    }
+                    return;
+                }
+
+                // Check if email confirmation is required
+                // If user is not immediately logged in, email confirmation is enabled
+                if (data.user && !data.session) {
+                    // Email confirmation required - redirect to check-email page
+                    router.push(`/login/check-email?email=${encodeURIComponent(email)}`);
+                } else {
+                    // No confirmation required - redirect to dashboard
+                    router.push("/dashboard");
+                    router.refresh();
+                }
+            }
+        } catch (err) {
+            console.error("Auth error:", err);
+            setError("Ocorreu um erro. Tente novamente.");
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
-        // Added h-[100dvh] and overflow-hidden to prevent page scroll
         <div className="h-[100dvh] w-full grid lg:grid-cols-2 bg-[#F7F5F0] overflow-hidden">
             {/* Left Column - Brand/Visual */}
             <div className="relative hidden lg:flex h-full overflow-hidden bg-[#2A3B2E] flex-col justify-between p-12 xl:p-16 text-[#F7F5F0]">
@@ -96,6 +176,16 @@ export default function LoginForm() {
                         </p>
                     </div>
 
+                    {error && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm"
+                        >
+                            {error}
+                        </motion.div>
+                    )}
+
                     <motion.form
                         key={isLogin ? "login" : "register"}
                         initial={{ opacity: 0, x: 20 }}
@@ -108,18 +198,38 @@ export default function LoginForm() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Nome</label>
-                                    <input type="text" className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]" placeholder="Seu nome" />
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]"
+                                        placeholder="Seu nome"
+                                        required={!isLogin}
+                                    />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">WhatsApp</label>
-                                    <input type="tel" className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]" placeholder="(11) 99999-9999" />
+                                    <input
+                                        type="tel"
+                                        value={phone}
+                                        onChange={(e) => setPhone(e.target.value)}
+                                        className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]"
+                                        placeholder="(11) 99999-9999"
+                                    />
                                 </div>
                             </div>
                         )}
 
                         <div className="space-y-2">
                             <label className="text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">E-mail</label>
-                            <input type="email" className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]" placeholder="exemplo@email.com" />
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]"
+                                placeholder="exemplo@email.com"
+                                required
+                            />
                         </div>
 
                         <div className="space-y-2">
@@ -138,15 +248,33 @@ export default function LoginForm() {
                                     </button>
                                 )}
                             </div>
-                            <input type="password" className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]" placeholder="••••••••" />
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-[#DCD3C5] bg-white/50 focus:border-[#C19B58] focus:ring-1 focus:ring-[#C19B58] outline-none transition-all text-[#2A3B2E]"
+                                placeholder="••••••••"
+                                required
+                                minLength={6}
+                            />
                         </div>
 
                         <button
                             type="submit"
-                            className="w-full bg-[#2A3B2E] text-[#F7F5F0] py-3.5 xl:py-4 rounded-lg font-medium tracking-wide hover:bg-[#1f2d22] transition-all flex items-center justify-center gap-2 group shadow-lg shadow-[#2A3B2E]/20"
+                            disabled={isLoading}
+                            className="w-full bg-[#2A3B2E] text-[#F7F5F0] py-3.5 xl:py-4 rounded-lg font-medium tracking-wide hover:bg-[#1f2d22] transition-all flex items-center justify-center gap-2 group shadow-lg shadow-[#2A3B2E]/20 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
-                            {isLogin ? "Acessar Projeto" : "Continuar para o Briefing"}
-                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                            {isLoading ? (
+                                <>
+                                    <Loader2 size={18} className="animate-spin" />
+                                    <span>Aguarde...</span>
+                                </>
+                            ) : (
+                                <>
+                                    {isLogin ? "Acessar Projeto" : "Continuar para o Briefing"}
+                                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                </>
+                            )}
                         </button>
                     </motion.form>
 
@@ -160,10 +288,20 @@ export default function LoginForm() {
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
-                        <button className="flex items-center justify-center gap-2 py-3 border border-[#DCD3C5] bg-white/50 rounded-lg hover:bg-white hover:border-[#C19B58] transition-colors text-sm font-medium text-[#3E4A3F]">
+                        <button
+                            type="button"
+                            className="flex items-center justify-center gap-2 py-3 border border-[#DCD3C5] bg-white/50 rounded-lg hover:bg-white hover:border-[#C19B58] transition-colors text-sm font-medium text-[#3E4A3F] opacity-50 cursor-not-allowed"
+                            disabled
+                            title="Em breve"
+                        >
                             Google
                         </button>
-                        <button className="flex items-center justify-center gap-2 py-3 border border-[#DCD3C5] bg-white/50 rounded-lg hover:bg-white hover:border-[#C19B58] transition-colors text-sm font-medium text-[#3E4A3F]">
+                        <button
+                            type="button"
+                            className="flex items-center justify-center gap-2 py-3 border border-[#DCD3C5] bg-white/50 rounded-lg hover:bg-white hover:border-[#C19B58] transition-colors text-sm font-medium text-[#3E4A3F] opacity-50 cursor-not-allowed"
+                            disabled
+                            title="Em breve"
+                        >
                             Apple
                         </button>
                     </div>
@@ -171,7 +309,10 @@ export default function LoginForm() {
                     <p className="text-center text-sm text-[#6B7A6C]">
                         {isLogin ? "Ainda não iniciou?" : "Já tem um projeto em andamento?"}{" "}
                         <button
-                            onClick={() => setIsLogin(!isLogin)}
+                            onClick={() => {
+                                setIsLogin(!isLogin);
+                                setError(null);
+                            }}
                             className="text-[#2A3B2E] font-medium hover:underline hover:text-[#C19B58] transition-colors"
                         >
                             {isLogin ? "Criar novo" : "Fazer login"}

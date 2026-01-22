@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
     Heart,
@@ -16,12 +16,10 @@ import {
     Check,
     X,
     Sparkles,
-    AlertCircle,
     Tag,
 } from "lucide-react";
 import { useBriefing, BriefingData } from "@/contexts/BriefingContext";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface EditableFieldProps {
     label: string;
@@ -96,26 +94,24 @@ function EditableField({ label, value, field, icon, type = "text" }: EditableFie
 }
 
 export default function DashboardPage() {
-    const router = useRouter();
-    const { briefingData, hasBriefing } = useBriefing();
-    const [mounted, setMounted] = useState(false);
+    const { briefingData, hasBriefing, isLoading, createEvent } = useBriefing();
+    const [isCreating, setIsCreating] = useState(false);
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    // Redirect to templates if no briefing (user needs to purchase)
-    useEffect(() => {
-        if (mounted && !hasBriefing) {
-            // Give a short delay to show the message before redirecting
-            const timer = setTimeout(() => {
-                router.push("/templates");
-            }, 3000);
-            return () => clearTimeout(timer);
+    const handleCreateEvent = async () => {
+        setIsCreating(true);
+        // Create with default template - user can change later
+        const success = await createEvent(
+            "classic-elegance",
+            "Classic Elegance",
+            "Elegante e atemporal"
+        );
+        if (!success) {
+            console.error("Failed to create event");
         }
-    }, [mounted, hasBriefing, router]);
+        setIsCreating(false);
+    };
 
-    if (!mounted) {
+    if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
                 <div className="w-8 h-8 border-2 border-[#C19B58]/30 border-t-[#C19B58] rounded-full animate-spin" />
@@ -135,10 +131,10 @@ export default function DashboardPage() {
                         <Tag size={40} className="text-[#C19B58]" />
                     </div>
                     <h1 className="text-2xl md:text-3xl font-medium text-[#2A3B2E] mb-4 font-[family-name:var(--font-heading)]">
-                        Contrate Seu Projeto
+                        Crie Seu Evento
                     </h1>
                     <p className="text-[#6B7A6C] mb-6">
-                        Para acessar a área do cliente e gerenciar seu casamento, você precisa primeiro contratar um projeto.
+                        Você ainda não criou um evento. Clique abaixo para começar a personalizar seu convite de casamento.
                     </p>
 
                     {/* Price Card */}
@@ -150,21 +146,29 @@ export default function DashboardPage() {
                         <p className="text-sm text-white/70">Pagamento único • Tudo incluso</p>
                     </div>
 
-                    <div className="flex items-center justify-center gap-2 text-sm text-[#6B7A6C] mb-6">
-                        <div className="w-4 h-4 border-2 border-[#C19B58]/30 border-t-[#C19B58] rounded-full animate-spin" />
-                        <span>Redirecionando para templates em 3s...</span>
-                    </div>
+                    <motion.button
+                        onClick={handleCreateEvent}
+                        disabled={isCreating}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-[#C19B58] text-white rounded-lg font-medium hover:bg-[#b08d4b] transition-colors shadow-lg shadow-[#C19B58]/30 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                        {isCreating ? (
+                            <>
+                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                Criando...
+                            </>
+                        ) : (
+                            <>
+                                <Sparkles size={18} />
+                                Criar Meu Evento
+                            </>
+                        )}
+                    </motion.button>
 
-                    <Link href="/templates">
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#C19B58] text-white rounded-lg font-medium hover:bg-[#b08d4b] transition-colors shadow-lg shadow-[#C19B58]/30"
-                        >
-                            <Sparkles size={18} />
-                            Ver Templates e Contratar
-                        </motion.button>
-                    </Link>
+                    <p className="text-xs text-[#6B7A6C] mt-4">
+                        Ou <Link href="/templates" className="text-[#C19B58] hover:underline">escolha um template específico</Link>
+                    </p>
                 </motion.div>
             </div>
         );

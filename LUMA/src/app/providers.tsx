@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { CartProvider } from "@/contexts/CartContext";
 import { BriefingProvider } from "@/contexts/BriefingContext";
+import { ToastContainer } from "@/components/ui/Toast";
 
 interface ProvidersProps {
     children: ReactNode;
@@ -19,8 +20,10 @@ export function Providers({ children }: ProvidersProps) {
             <CartProvider>
                 <BriefingProvider>
                     {children}
+                    <ToastContainer />
                 </BriefingProvider>
             </CartProvider>
         </ErrorBoundary>
     );
 }
+

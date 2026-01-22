@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
     Search,
@@ -11,10 +11,21 @@ import {
     Baby,
     MessageSquare,
     Filter,
-    RefreshCw
+    RefreshCw,
+    Trash2,
+    Loader2
 } from "lucide-react";
-import { getGuestList, getGuestStats, updateGuest, dispatchUpdate } from "@/services/mockStorage";
-import { RSVPGuest } from "@/types";
+import { useBriefing } from "@/contexts/BriefingContext";
+import {
+    getGuestList,
+    getGuestStats,
+    updateGuest,
+    removeRSVP,
+    RSVPGuest,
+    RSVPStats
+} from "@/services/rsvpService";
+import { showToast } from "@/components/ui/Toast";
+import Link from "next/link";
 
 const GUEST_GROUPS = [
     "Sem Grupo",
@@ -27,49 +38,67 @@ const GUEST_GROUPS = [
 ];
 
 export default function GuestsPage() {
+    const { eventId, hasBriefing, isLoading: contextLoading } = useBriefing();
     const [guests, setGuests] = useState<RSVPGuest[]>([]);
-    const [stats, setStats] = useState({ total: 0, confirmed: 0, pending: 0, totalAdults: 0, totalChildren: 0 });
+    const [stats, setStats] = useState<RSVPStats>({
+        total: 0,
+        confirmed: 0,
+        declined: 0,
+        totalGuests: 0,
+        totalChildren: 0
+    });
     const [searchTerm, setSearchTerm] = useState("");
-    const [filterStatus, setFilterStatus] = useState<"all" | "confirmed" | "pending">("all");
-    const [filterGroup, setFilterGroup] = useState<string>("all");
+    const [filterStatus, setFilterStatus] = useState<"all" | "confirmed" | "declined">("all");
+    const [isLoading, setIsLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
-    const loadData = () => {
-        const guestList = getGuestList();
-        const guestStats = getGuestStats();
-        setGuests(guestList);
-        setStats(guestStats);
-    };
+    const loadData = useCallback(async () => {
+        if (!eventId) return;
+
+        setIsRefreshing(true);
+        try {
+            const [guestList, guestStats] = await Promise.all([
+                getGuestList(eventId),
+                getGuestStats(eventId)
+            ]);
+            setGuests(guestList);
+            setStats(guestStats);
+        } catch (e) {
+            console.error("Error loading guests:", e);
+            showToast("Erro ao carregar convidados", "error");
+        }
+        setIsRefreshing(false);
+        setIsLoading(false);
+    }, [eventId]);
 
     useEffect(() => {
-        loadData();
-
-        // Listen for storage updates
-        const handleStorageUpdate = () => loadData();
-        window.addEventListener("luma-storage-update", handleStorageUpdate);
-
-        return () => window.removeEventListener("luma-storage-update", handleStorageUpdate);
-    }, []);
+        if (!contextLoading && eventId) {
+            loadData();
+        } else if (!contextLoading && !eventId) {
+            setIsLoading(false);
+        }
+    }, [contextLoading, eventId, loadData]);
 
     const filteredGuests = guests.filter(guest => {
         const matchesSearch = guest.name.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesFilter = filterStatus === "all" ||
-            (filterStatus === "confirmed" && guest.isAttending) ||
-            (filterStatus === "pending" && !guest.isAttending);
-        const matchesGroup = filterGroup === "all" || (guest.group || "Sem Grupo") === filterGroup;
-        return matchesSearch && matchesFilter && matchesGroup;
+            (filterStatus === "confirmed" && guest.is_attending) ||
+            (filterStatus === "declined" && !guest.is_attending);
+        return matchesSearch && matchesFilter;
     });
 
     const handleExportCSV = () => {
-        const headers = ["Nome", "Telefone", "Status", "Grupo", "Adultos", "Crianças", "Mensagem", "Data"];
+        const headers = ["Nome", "Email", "Telefone", "Status", "Grupo", "Adultos", "Crianças", "Mensagem", "Data"];
         const rows = guests.map(g => [
             g.name,
-            g.phone,
-            g.isAttending ? "Confirmado" : "Pendente",
-            g.group || "Sem Grupo",
+            g.email || "",
+            g.phone || "",
+            g.is_attending ? "Confirmado" : "Não comparecerá",
+            g.group_name || "Sem Grupo",
             g.guests.toString(),
-            g.children === "sim" ? "Sim" : "Não",
+            g.children.toString(),
             `"${(g.message || "").replace(/"/g, "'")}"`,
-            new Date(g.createdAt).toLocaleDateString('pt-BR')
+            new Date(g.created_at).toLocaleDateString('pt-BR')
         ]);
 
         const csv = [headers, ...rows].map(row => row.join(",")).join("\n");
@@ -81,11 +110,65 @@ export default function GuestsPage() {
         a.click();
     };
 
-    const handleGroupChange = (guestId: string, group: string) => {
-        updateGuest(guestId, { group });
-        dispatchUpdate();
-        loadData();
+    const handleGroupChange = async (guestId: string, group: string) => {
+        if (!eventId) return;
+
+        const result = await updateGuest(eventId, guestId, { group_name: group });
+        if (result) {
+            setGuests(prev => prev.map(g =>
+                g.id === guestId ? { ...g, group_name: group } : g
+            ));
+        } else {
+            showToast("Erro ao atualizar grupo", "error");
+        }
     };
+
+    const handleRemoveGuest = async (guestId: string) => {
+        if (!eventId) return;
+
+        if (!confirm("Tem certeza que deseja remover este convidado?")) return;
+
+        const success = await removeRSVP(eventId, guestId);
+        if (success) {
+            setGuests(prev => prev.filter(g => g.id !== guestId));
+            setStats(prev => ({
+                ...prev,
+                total: prev.total - 1,
+                confirmed: guests.find(g => g.id === guestId)?.is_attending ? prev.confirmed - 1 : prev.confirmed,
+                declined: !guests.find(g => g.id === guestId)?.is_attending ? prev.declined - 1 : prev.declined,
+            }));
+            showToast("Convidado removido", "success");
+        } else {
+            showToast("Erro ao remover convidado", "error");
+        }
+    };
+
+    // Loading state
+    if (isLoading || contextLoading) {
+        return (
+            <div className="flex items-center justify-center min-h-[60vh]">
+                <div className="w-8 h-8 border-2 border-[#C19B58]/30 border-t-[#C19B58] rounded-full animate-spin" />
+            </div>
+        );
+    }
+
+    // No event
+    if (!hasBriefing || !eventId) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+                <Users size={48} className="text-[#DCD3C5] mb-4" />
+                <p className="text-[#6B7A6C] mb-4">
+                    Você precisa criar um evento primeiro para gerenciar convidados.
+                </p>
+                <Link
+                    href="/dashboard"
+                    className="text-[#C19B58] hover:underline"
+                >
+                    Ir para o Dashboard
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8">
@@ -102,10 +185,15 @@ export default function GuestsPage() {
                 <div className="flex gap-2">
                     <button
                         onClick={loadData}
-                        className="flex items-center gap-2 px-3 py-2.5 border border-[#DCD3C5] text-[#6B7A6C] text-sm rounded-lg hover:bg-[#E5E0D6] transition-colors"
+                        disabled={isRefreshing}
+                        className="flex items-center gap-2 px-3 py-2.5 border border-[#DCD3C5] text-[#6B7A6C] text-sm rounded-lg hover:bg-[#E5E0D6] transition-colors disabled:opacity-50"
                         title="Atualizar dados"
                     >
-                        <RefreshCw size={16} />
+                        {isRefreshing ? (
+                            <Loader2 size={16} className="animate-spin" />
+                        ) : (
+                            <RefreshCw size={16} />
+                        )}
                     </button>
                     <button
                         onClick={handleExportCSV}
@@ -131,7 +219,7 @@ export default function GuestsPage() {
                         </div>
                         <div>
                             <p className="text-2xl font-medium text-[#2A3B2E]">{stats.total}</p>
-                            <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Total</p>
+                            <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Respostas</p>
                         </div>
                     </div>
                 </motion.div>
@@ -164,8 +252,8 @@ export default function GuestsPage() {
                             <Clock size={18} className="text-amber-600" />
                         </div>
                         <div>
-                            <p className="text-2xl font-medium text-[#2A3B2E]">{stats.pending}</p>
-                            <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Pendentes</p>
+                            <p className="text-2xl font-medium text-[#2A3B2E]">{stats.declined}</p>
+                            <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Não comparecerão</p>
                         </div>
                     </div>
                 </motion.div>
@@ -181,8 +269,8 @@ export default function GuestsPage() {
                             <Baby size={18} className="text-[#C19B58]" />
                         </div>
                         <div>
-                            <p className="text-2xl font-medium text-[#2A3B2E]">{stats.totalAdults}</p>
-                            <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Pessoas no Total</p>
+                            <p className="text-2xl font-medium text-[#2A3B2E]">{stats.totalGuests}</p>
+                            <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Pessoas Total</p>
                         </div>
                     </div>
                 </motion.div>
@@ -209,7 +297,7 @@ export default function GuestsPage() {
                     >
                         <option value="all">Todos</option>
                         <option value="confirmed">Confirmados</option>
-                        <option value="pending">Pendentes</option>
+                        <option value="declined">Não comparecerão</option>
                     </select>
                 </div>
             </div>
@@ -225,11 +313,12 @@ export default function GuestsPage() {
                         <thead className="bg-[#F7F5F0] border-b border-[#DCD3C5]">
                             <tr>
                                 <th className="text-left px-6 py-4 text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Nome</th>
-                                <th className="text-left px-6 py-4 text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Telefone</th>
+                                <th className="text-left px-6 py-4 text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Contato</th>
                                 <th className="text-left px-6 py-4 text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Status</th>
                                 <th className="text-left px-6 py-4 text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Grupo</th>
                                 <th className="text-center px-6 py-4 text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Pessoas</th>
                                 <th className="text-left px-6 py-4 text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Mensagem</th>
+                                <th className="text-center px-6 py-4 text-xs font-bold text-[#2A3B2E] uppercase tracking-wider">Ações</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-[#DCD3C5]/50">
@@ -239,24 +328,24 @@ export default function GuestsPage() {
                                         <span className="text-sm font-medium text-[#2A3B2E]">{guest.name}</span>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="text-sm text-[#6B7A6C]">{guest.phone}</span>
+                                        <div className="text-sm text-[#6B7A6C]">
+                                            {guest.email && <div>{guest.email}</div>}
+                                            {guest.phone && <div>{guest.phone}</div>}
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${guest.isAttending
+                                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${guest.is_attending
                                             ? "bg-emerald-100 text-emerald-700"
                                             : "bg-amber-100 text-amber-700"
                                             }`}>
-                                            <span className={`w-1.5 h-1.5 rounded-full ${guest.isAttending ? "bg-emerald-500" : "bg-amber-500"
+                                            <span className={`w-1.5 h-1.5 rounded-full ${guest.is_attending ? "bg-emerald-500" : "bg-amber-500"
                                                 }`} />
-                                            {guest.isAttending ? "Confirmado" : "Não comparecerá"}
+                                            {guest.is_attending ? "Confirmado" : "Não comparecerá"}
                                         </span>
-                                    </td>
-                                    <td className="px-6 py-4 text-center">
-                                        <span className="text-sm text-[#3E4A3F]">{guest.guests}</span>
                                     </td>
                                     <td className="px-6 py-4">
                                         <select
-                                            value={guest.group || "Sem Grupo"}
+                                            value={guest.group_name || "Sem Grupo"}
                                             onChange={(e) => handleGroupChange(guest.id, e.target.value)}
                                             className="px-2 py-1 text-xs border border-[#DCD3C5] rounded-md focus:border-[#C19B58] focus:outline-none bg-white text-[#3E4A3F]"
                                         >
@@ -264,6 +353,11 @@ export default function GuestsPage() {
                                                 <option key={group} value={group}>{group}</option>
                                             ))}
                                         </select>
+                                    </td>
+                                    <td className="px-6 py-4 text-center">
+                                        <span className="text-sm text-[#3E4A3F]">
+                                            {guest.guests}{guest.children > 0 && ` + ${guest.children} crianças`}
+                                        </span>
                                     </td>
                                     <td className="px-6 py-4">
                                         {guest.message ? (
@@ -274,6 +368,15 @@ export default function GuestsPage() {
                                         ) : (
                                             <span className="text-sm text-[#DCD3C5]">—</span>
                                         )}
+                                    </td>
+                                    <td className="px-6 py-4 text-center">
+                                        <button
+                                            onClick={() => handleRemoveGuest(guest.id)}
+                                            className="p-1.5 text-[#6B7A6C] hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                            title="Remover convidado"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
                                     </td>
                                 </tr>
                             ))}

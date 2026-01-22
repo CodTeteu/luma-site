@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -12,12 +12,19 @@ import {
     LogOut,
     Menu,
     X,
-    Heart
+    Heart,
+    Loader2,
+    Pencil,
+    Calendar
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { createClient } from "@/lib/supabase/client";
+import { useBriefing } from "@/contexts/BriefingContext";
 
 const navItems = [
     { href: "/dashboard", label: "Visão Geral", icon: Home },
+    { href: "/dashboard/events", label: "Eventos", icon: Calendar },
+    { href: "/dashboard/editor", label: "Editor", icon: Pencil },
     { href: "/dashboard/guests", label: "Convidados", icon: Users },
     { href: "/dashboard/financial", label: "Financeiro", icon: Wallet },
     { href: "/dashboard/settings", label: "Configurações", icon: Settings },
@@ -29,13 +36,31 @@ interface SidebarProps {
 
 export default function Sidebar({ userName = "Noivos" }: SidebarProps) {
     const pathname = usePathname();
+    const router = useRouter();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     const isActive = (href: string) => {
         if (href === "/dashboard") {
             return pathname === "/dashboard";
         }
         return pathname.startsWith(href);
+    };
+
+    const handleLogout = async () => {
+        setIsLoggingOut(true);
+        const supabase = createClient();
+
+        if (supabase) {
+            await supabase.auth.signOut();
+        }
+
+        // Clear any localStorage data
+        localStorage.removeItem("luma_briefing_data");
+        localStorage.removeItem("luma_dev_user");
+
+        router.push("/login");
+        router.refresh();
     };
 
     const NavContent = () => (
@@ -89,13 +114,18 @@ export default function Sidebar({ userName = "Noivos" }: SidebarProps) {
 
             {/* Logout */}
             <div className="p-4 border-t border-[#DCD3C5]">
-                <Link
-                    href="/"
-                    className="flex items-center gap-3 px-4 py-3 text-[#6B7A6C] hover:text-[#9B2C2C] hover:bg-red-50 rounded-lg transition-colors text-sm font-medium"
+                <button
+                    onClick={handleLogout}
+                    disabled={isLoggingOut}
+                    className="w-full flex items-center gap-3 px-4 py-3 text-[#6B7A6C] hover:text-[#9B2C2C] hover:bg-red-50 rounded-lg transition-colors text-sm font-medium disabled:opacity-50"
                 >
-                    <LogOut size={18} />
-                    Sair
-                </Link>
+                    {isLoggingOut ? (
+                        <Loader2 size={18} className="animate-spin" />
+                    ) : (
+                        <LogOut size={18} />
+                    )}
+                    {isLoggingOut ? "Saindo..." : "Sair"}
+                </button>
             </div>
         </>
     );
