@@ -8,6 +8,7 @@ const stats = [
     { label: "Casamentos Realizados", value: siteConfig.stats.weddingsCompleted },
     { label: "Média de Avaliação", value: siteConfig.stats.averageRating },
     { label: "Países Atendidos", value: siteConfig.stats.countriesServed },
+    { label: "Casais Atendidos", value: siteConfig.stats.couplesServed },
 ];
 
 /**
@@ -32,7 +33,7 @@ export function AboutSection() {
                     emocionante. Unimos a sofisticação do design impresso com a inteligência da
                     tecnologia. Somos um estúdio focado em casais que valorizam cada detalhe.
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-[#DCD3C5] pt-12">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-6 md:gap-8 border-t border-[#DCD3C5] pt-12">
                     {stats.map((stat, i) => (
                         <div key={i}>
                             <p className="text-3xl font-bold text-[#2A3B2E] font-heading">{stat.value}</p>

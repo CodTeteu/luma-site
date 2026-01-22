@@ -10,6 +10,7 @@ const features = [
     "Layout aprovado via WhatsApp",
     "Ajustes ilimitados durante a criação",
     "Site pronto em até 48 horas",
+    "Tipografia premium e paleta sob medida",
 ];
 
 /**
@@ -45,8 +46,9 @@ export function VisualIdentitySection() {
                     <LuxuryDivider className="mb-8 !justify-start" />
 
                     <p className="text-[#3E4A3F] text-lg leading-relaxed mb-8">
-                        Tire suas ideias do Pinterest e transforme em realidade. Nossa equipe de design
-                        adapta cada detalhe à identidade visual do seu evento. Sem dores de cabeça.
+                        Tire suas ideias do Pinterest e transforme em realidade. Nossa equipe traduz
+                        referências em uma identidade única, pronta para o digital — elegante, sofisticada
+                        e pensada para encantar seus convidados.
                     </p>
 
                     <ul className="space-y-4">
