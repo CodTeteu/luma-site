@@ -102,21 +102,25 @@ export function BriefingModal({ isOpen, onClose, template }: BriefingModalProps)
 
     const formatWhatsAppMessage = () => {
         const templateName = template ? `${template.name} (${template.style})` : "Não especificado";
+        const eventType = template?.id.toLowerCase().includes("grad") ? "graduation" : "wedding";
+        const isGrad = eventType === "graduation";
+
         return `🌸 *NOVO PEDIDO LUMA* 🌸
 
+📋 *Pedido:* ${isGrad ? "Formatura" : "Casamento"}
 📋 *Template:* ${templateName}
 
-💑 *Noivos:* ${formData.brideName || "-"} & ${formData.groomName || "-"}
+${isGrad ? `🎓 *Formando:* ${formData.brideName || "-"}` : `💑 *Noivos:* ${formData.brideName || "-"} & ${formData.groomName || "-"}`}
 📧 *Email:* ${formData.email || "-"}
 📱 *Tel:* ${formData.phone || "-"}
 
 📅 *Data:* ${formData.weddingDate || "-"}
-🕐 *Cerimônia:* ${formData.ceremonyTime || "-"}
-🎉 *Festa:* ${formData.partyTime || "-"}
+${isGrad ? `🕐 *Colação:* ${formData.ceremonyTime || "-"}` : `🕐 *Cerimônia:* ${formData.ceremonyTime || "-"}`}
+${isGrad ? `🎉 *Baile:* ${formData.partyTime || "-"}` : `🎉 *Festa:* ${formData.partyTime || "-"}`}
 👥 *Convidados:* ${formData.guestCount || "-"}
 
-📍 *Cerimônia:* ${formData.ceremonyLocation || "-"}
-📍 *Festa:* ${formData.partyLocation || "-"}
+${isGrad ? `📍 *Local:* ${formData.ceremonyLocation || "-"}` : `📍 *Cerimônia:* ${formData.ceremonyLocation || "-"}`}
+${isGrad ? `📍 *Endereço:* ${formData.partyLocation || "-"}` : `📍 *Festa:* ${formData.partyLocation || "-"}`}
 
 🎨 *Estilo:* ${formData.style || "-"}
 🌈 *Cores:* ${formData.colors || "-"}
@@ -126,10 +130,13 @@ export function BriefingModal({ isOpen, onClose, template }: BriefingModalProps)
 
     const handleSubmit = () => {
         setIsSubmitting(true);
+        const eventType = (template?.id.toLowerCase().includes("grad") ? "graduation" : "wedding") as "wedding" | "graduation";
+
         const briefingData: BriefingData = {
             templateId: template?.id || "",
             templateName: template?.name || "",
             templateStyle: template?.style || "",
+            eventType,
             ...formData,
             submittedAt: new Date().toISOString(),
             status: "pending",
