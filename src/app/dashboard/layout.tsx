@@ -12,10 +12,14 @@ export default function DashboardLayout({
 }) {
     const { briefingData, hasBriefing } = useBriefing();
 
-    // Get couple name from briefing data or use default
+    const eventType = briefingData?.eventType || "wedding";
+
+    // Get user name from briefing data or use default
     const userName = hasBriefing && briefingData
-        ? `${briefingData.brideName} & ${briefingData.groomName}`
-        : "Noivos";
+        ? (eventType === "graduation"
+            ? briefingData.brideName
+            : `${briefingData.brideName} & ${briefingData.groomName}`)
+        : (eventType === "graduation" ? "Formando" : "Noivos");
 
     return (
         <div className="min-h-screen bg-[#F7F5F0] font-sans selection:bg-[#C19B58] selection:text-white">

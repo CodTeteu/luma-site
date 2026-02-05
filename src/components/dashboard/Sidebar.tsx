@@ -34,7 +34,7 @@ interface SidebarProps {
     userName?: string;
 }
 
-export default function Sidebar() {
+export default function Sidebar({ userName }: SidebarProps) {
     const { briefingData } = useBriefing();
     const pathname = usePathname();
     const router = useRouter();
@@ -83,8 +83,7 @@ export default function Sidebar() {
                     </div>
                     <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-[#2A3B2E] truncate">
-                            {briefingData?.brideName || "Novo Evento"}
-                            {briefingData?.eventType !== "graduation" && briefingData?.groomName && ` & ${briefingData.groomName}`}
+                            {userName || (briefingData?.brideName || "Novo Evento")}
                         </p>
                         <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">
                             {briefingData?.eventType === "graduation" ? "Sua Formatura" : "Seu Casamento"}
