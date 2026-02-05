@@ -106,6 +106,13 @@ export const DEFAULT_INVITATION_CONTENT: InvitationContent = {
 export type EventStatus = "draft" | "published";
 
 // ============================================
+// Event Type & Plan (from domain/plans)
+// ============================================
+
+export type EventType = "wedding" | "graduation";
+export type PlanType = "free" | "plus" | "concierge";
+
+// ============================================
 // Full Event Type (from Supabase)
 // ============================================
 
@@ -115,7 +122,13 @@ export interface Event {
     slug: string;
     template_id: string;
     status: EventStatus;
+    event_type: EventType;
+    plan: PlanType;
+    event_date: string | null;
+    expires_at: string | null;
+    password_hash: string | null;
     content: InvitationContent;
     created_at: string;
     updated_at: string;
 }
+

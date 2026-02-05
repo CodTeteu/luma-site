@@ -31,25 +31,25 @@ export function Footer() {
                     </div>
                 </div>
 
-                {/* Product Column */}
+                {/* Services Column */}
                 <div>
-                    <h4 className="text-white/95 font-medium mb-3 md:mb-4 uppercase tracking-wider text-[10px] opacity-100">Produto</h4>
+                    <h4 className="text-white/95 font-medium mb-3 md:mb-4 uppercase tracking-wider text-[10px] opacity-100">Serviços</h4>
                     <ul className="space-y-2">
-                        <FooterLink href="#hero">Início</FooterLink>
-                        <FooterLink href="#como-funciona">Como Funciona</FooterLink>
-                        <FooterLink href="#funcionalidades">Funcionalidades</FooterLink>
-                        <FooterLink href="#portfolio">Portfólio</FooterLink>
+                        <FooterLink href="/casamento">Casamentos</FooterLink>
+                        <FooterLink href="/formatura">Formaturas</FooterLink>
+                        <FooterLink href="/concierge">Concierge</FooterLink>
+                        <FooterLink href="/templates">Templates</FooterLink>
                     </ul>
                 </div>
 
-                {/* Company Column - Hidden on smallest mobile */}
-                <div className="hidden sm:block">
-                    <h4 className="text-white/95 font-medium mb-3 md:mb-4 uppercase tracking-wider text-[10px] opacity-100">Empresa</h4>
+                {/* Product Column */}
+                <div>
+                    <h4 className="text-white/95 font-medium mb-3 md:mb-4 uppercase tracking-wider text-[10px] opacity-100">LUMA</h4>
                     <ul className="space-y-2">
-                        <FooterLink href="#">Sobre Nós</FooterLink>
-                        <FooterLink href="#">Carreiras</FooterLink>
-                        <FooterLink href="#">Blog</FooterLink>
-                        <FooterLink href="#">Imprensa</FooterLink>
+                        <FooterLink href="/precos">Preços</FooterLink>
+                        <FooterLink href="/login">Criar Convite</FooterLink>
+                        <FooterLink href="#como-funciona">Como Funciona</FooterLink>
+                        <FooterLink href="#duvidas">Dúvidas</FooterLink>
                     </ul>
                 </div>
 
@@ -57,9 +57,8 @@ export function Footer() {
                 <div>
                     <h4 className="text-white/95 font-medium mb-3 md:mb-4 uppercase tracking-wider text-[10px] opacity-100">Legal</h4>
                     <ul className="space-y-2">
-                        <FooterLink href="#">Termos de Uso</FooterLink>
-                        <FooterLink href="#">Privacidade</FooterLink>
-                        <FooterLink href="#">Cookies</FooterLink>
+                        <FooterLink href="/termos-de-uso">Termos de Uso</FooterLink>
+                        <FooterLink href="/politica-de-privacidade">Privacidade</FooterLink>
                         <div className="pt-2 md:pt-3 mt-2 md:mt-3 border-t border-white/5">
                             <Link
                                 href={siteConfig.links.login}

@@ -41,6 +41,7 @@ export interface BriefingData {
     colors: string;
     message: string;
     // Metadata
+    eventType: "wedding" | "graduation";
     submittedAt: string;
     status: "pending" | "in_progress" | "completed";
 }
@@ -55,6 +56,7 @@ export interface EventSummary {
     id: string;
     slug: string;
     status: "draft" | "published";
+    event_type: "wedding" | "graduation";
     created_at: string;
     content: Partial<EventContent>;
 }
@@ -103,6 +105,7 @@ const DEFAULT_BRIEFING_DATA: BriefingData = {
     style: "",
     colors: "",
     message: "",
+    eventType: "wedding",
     submittedAt: "",
     status: "pending",
 };
@@ -163,7 +166,7 @@ export function BriefingProvider({ children }: { children: ReactNode }) {
             const { data: event, error } = await supabase
                 .from("events")
                 // Avoid select("*") to reduce risk of leaking unexpected fields
-                .select("id, slug, status, content")
+                .select("id, slug, status, event_type, content")
                 .eq("id", eventIdToLoad)
                 .single();
 
@@ -180,6 +183,9 @@ export function BriefingProvider({ children }: { children: ReactNode }) {
                 email: privateOverrides?.email ?? "",
                 phone: privateOverrides?.phone ?? "",
             });
+
+            // Set the event type from the database field
+            merged.eventType = (event.event_type as "wedding" | "graduation") || "wedding";
 
             setBriefingDataState(merged);
             return true;
@@ -228,7 +234,7 @@ export function BriefingProvider({ children }: { children: ReactNode }) {
                 // 1) Fetch all user's events
                 const { data: events, error: eventsError } = await supabase
                     .from("events")
-                    .select("id, slug, status, created_at, content")
+                    .select("id, slug, status, event_type, created_at, content")
                     .eq("user_id", user.id)
                     .order("created_at", { ascending: false });
 
@@ -309,7 +315,7 @@ export function BriefingProvider({ children }: { children: ReactNode }) {
 
         const { data: events } = await supabase
             .from("events")
-            .select("id, slug, status, created_at, content")
+            .select("id, slug, status, event_type, created_at, content")
             .eq("user_id", user.id)
             .order("created_at", { ascending: false });
 
@@ -468,10 +474,11 @@ export function BriefingProvider({ children }: { children: ReactNode }) {
                         user_id: user.id,
                         slug,
                         template_id: templateId,
+                        event_type: templateId.includes("grad") ? "graduation" : "wedding", // simple heuristic or pass explicitly
                         status: "draft",
                         content: contentPublic,
                     })
-                    .select("id, slug, status, content")
+                    .select("id, slug, status, event_type, content")
                     .single();
 
                 if (error || !newEvent) {
@@ -492,12 +499,13 @@ export function BriefingProvider({ children }: { children: ReactNode }) {
                 setEventStatus(newEvent.status);
 
                 // Keep private fields only in state
-                setBriefingDataState(
-                    fromEventContent(newEvent.content as Partial<EventContent>, {
+                setBriefingDataState({
+                    ...fromEventContent(newEvent.content as Partial<EventContent>, {
                         email: user.email || "",
                         phone: "",
-                    })
-                );
+                    }),
+                    eventType: newEvent.event_type as "wedding" | "graduation"
+                });
 
                 await refreshEvents();
                 return true;
@@ -577,7 +585,7 @@ export function BriefingProvider({ children }: { children: ReactNode }) {
                 eventSlug,
                 eventStatus,
                 allEvents,
-                hasBriefing: !!eventId, // more robust than !!briefingData
+                hasBriefing: !!eventId || (!!briefingData && !!briefingData.templateId),
                 isLoading,
                 setBriefingData,
                 updateBriefingData,

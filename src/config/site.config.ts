@@ -5,9 +5,9 @@
  */
 
 export const siteConfig = {
-  name: "LUMA",
-  tagline: "Conciergerie Digital",
-  description: "Tecnologia e Design para casamentos inesquecíveis.",
+  name: "LUMA Convites",
+  tagline: "Convites Digitais Elegantes",
+  description: "Crie convites digitais com RSVP, lista de presentes e galeria. Grátis para começar.",
 
   // Contact
   contact: {
@@ -35,11 +35,11 @@ export const siteConfig = {
   // Navigation
   navigation: {
     main: [
+      { label: "Casamentos", href: "/casamento" },
+      { label: "Formaturas", href: "/formatura" },
+      { label: "Concierge", href: "/concierge" },
       { label: "Templates", href: "/templates" },
-      { label: "Como Funciona", href: "#como-funciona" },
-      { label: "Sobre", href: "#sobre" },
-      { label: "Portfólio", href: "#portfolio" },
-      { label: "Dúvidas", href: "#duvidas" },
+      { label: "Preços", href: "/precos" },
     ],
   },
 

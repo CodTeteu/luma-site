@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createHash } from "crypto";
+import { PlanType, checkRSVPLimit } from "@/domain/plans";
 
 // ============================================
 // Configuration
@@ -150,7 +151,7 @@ export async function POST(request: NextRequest) {
         // ================================
         const { data: event, error: eventError } = await supabase
             .from("events")
-            .select("id, status")
+            .select("id, status, plan, expires_at")
             .eq("slug", body.slug)
             .single();
 
@@ -167,6 +168,38 @@ export async function POST(request: NextRequest) {
         if (event.status !== "published") {
             return NextResponse.json(
                 { success: false, error: "Este evento ainda não está aberto para confirmações" },
+                { status: 403 }
+            );
+        }
+
+        // ================================
+        // 5.1) CHECK EVENT NOT EXPIRED
+        // ================================
+        if (event.expires_at && new Date(event.expires_at) < new Date()) {
+            return NextResponse.json(
+                { success: false, error: "Este convite expirou" },
+                { status: 403 }
+            );
+        }
+
+        // ================================
+        // 5.2) CHECK RSVP LIMIT
+        // ================================
+        const eventPlan = (event.plan || 'free') as PlanType;
+        const { count: currentRSVPCount } = await supabase
+            .from("rsvps")
+            .select("*", { count: "exact", head: true })
+            .eq("event_id", event.id);
+
+        const limitCheck = checkRSVPLimit(eventPlan, currentRSVPCount || 0);
+        if (!limitCheck.allowed) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    error: "Limite de confirmações atingido para este evento",
+                    limit: limitCheck.limit,
+                    current: limitCheck.current
+                },
                 { status: 403 }
             );
         }

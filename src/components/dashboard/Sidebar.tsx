@@ -34,7 +34,8 @@ interface SidebarProps {
     userName?: string;
 }
 
-export default function Sidebar({ userName = "Noivos" }: SidebarProps) {
+export default function Sidebar() {
+    const { briefingData } = useBriefing();
     const pathname = usePathname();
     const router = useRouter();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -81,8 +82,13 @@ export default function Sidebar({ userName = "Noivos" }: SidebarProps) {
                         <Heart size={18} />
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-[#2A3B2E] truncate">{userName}</p>
-                        <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">Seu Casamento</p>
+                        <p className="text-sm font-medium text-[#2A3B2E] truncate">
+                            {briefingData?.brideName || "Novo Evento"}
+                            {briefingData?.eventType !== "graduation" && briefingData?.groomName && ` & ${briefingData.groomName}`}
+                        </p>
+                        <p className="text-[10px] text-[#6B7A6C] uppercase tracking-wider">
+                            {briefingData?.eventType === "graduation" ? "Sua Formatura" : "Seu Casamento"}
+                        </p>
                     </div>
                 </div>
             </div>

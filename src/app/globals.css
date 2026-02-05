@@ -1,17 +1,139 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+/* ============================================
+   LUMA Design System v2
+   ============================================ */
+
 :root {
-  /* Organic Luxury Palette */
-  --cream: #F7F5F0;
-  --forest-green: #2A3B2E;
-  --muted-gold: #C19B58;
-  --text-body: #3E4A3F;
+  /* ========== COLOR PALETTE ========== */
+  /* Primary - Forest Green */
+  --color-forest-900: #1A2B1E;
+  --color-forest-800: #2A3B2E;
+  --color-forest-700: #3E4A3F;
+  --color-forest-600: #4A5A4C;
+  --color-forest-500: #6B7A6C;
+  --color-forest-400: #8A9A8C;
+  --color-forest-300: #A5B5A7;
+  --color-forest-200: #C1C9C0;
+  --color-forest-100: #E5E0D6;
+  --color-forest-50: #F7F5F0;
+
+  /* Accent - Muted Gold */
+  --color-gold-600: #A88347;
+  --color-gold-500: #C19B58;
+  --color-gold-400: #D4B070;
+  --color-gold-300: #E5C896;
+  --color-gold-200: #F0D9B0;
+  --color-gold-100: #FAF0DC;
+
+  /* Semantic */
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-error: #DC2626;
+  --color-info: #2196F3;
+
+  /* Legacy aliases */
+  --cream: var(--color-forest-50);
+  --forest-green: var(--color-forest-800);
+  --muted-gold: var(--color-gold-500);
+  --text-body: var(--color-forest-700);
   --white-soft: #FFFFFF;
 
   --background: var(--cream);
   --foreground: var(--text-body);
+
+  /* ========== SPACING SCALE ========== */
+  --space-0: 0;
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --space-24: 6rem;    /* 96px */
+  --space-32: 8rem;    /* 128px */
+
+  /* ========== TYPOGRAPHY ========== */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Cormorant Garamond', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+  --text-6xl: 3.75rem;   /* 60px */
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.2;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* ========== SHADOWS ========== */
+  --shadow-xs: 0 1px 2px 0 rgba(42, 59, 46, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(42, 59, 46, 0.1), 0 1px 2px 0 rgba(42, 59, 46, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(42, 59, 46, 0.1), 0 2px 4px -1px rgba(42, 59, 46, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(42, 59, 46, 0.1), 0 4px 6px -2px rgba(42, 59, 46, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(42, 59, 46, 0.1), 0 10px 10px -5px rgba(42, 59, 46, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(42, 59, 46, 0.25);
+  --shadow-gold: 0 4px 14px 0 rgba(193, 155, 88, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(42, 59, 46, 0.06);
+
+  /* ========== BORDER RADIUS ========== */
+  --radius-none: 0;
+  --radius-sm: 0.25rem;   /* 4px */
+  --radius-md: 0.5rem;    /* 8px */
+  --radius-lg: 0.75rem;   /* 12px */
+  --radius-xl: 1rem;      /* 16px */
+  --radius-2xl: 1.5rem;   /* 24px */
+  --radius-full: 9999px;
+
+  /* ========== TRANSITIONS ========== */
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ========== Z-INDEX SCALE ========== */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+  --z-max: 9999;
+
+  /* ========== TOUCH TARGETS ========== */
+  --touch-target-min: 44px;
+  --touch-target-comfortable: 48px;
 }
+
+/* ============================================
+   TAILWIND THEME INTEGRATION
+   ============================================ */
 
 @theme inline {
   --color-background: var(--cream);
@@ -29,7 +151,7 @@
   --color-accent: var(--muted-gold);
   --color-accent-foreground: #FFFFFF;
 
-  --color-destructive: #9B2C2C;
+  --color-destructive: #DC2626;
   --color-destructive-foreground: #FFFFFF;
 
   --color-border: #DCD8B8;
@@ -40,18 +162,19 @@
   --radius-md: 0.5rem;
   --radius-sm: 0.25rem;
 
-  /* Fonts */
   --font-heading: 'Playfair Display', serif;
   --font-body: 'Cormorant Garamond', serif;
-  --font-sans: 'Lato', sans-serif;
+  --font-sans: 'Inter', sans-serif;
 
-  /* Custom Colors */
   --color-cream: var(--cream);
   --color-forest: var(--forest-green);
   --color-gold: var(--muted-gold);
 }
 
-/* Base Styles - Native App Feel */
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -59,7 +182,6 @@
 
 html {
   scroll-behavior: smooth;
-  /* Enable smooth momentum scrolling on iOS */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -67,26 +189,87 @@ body {
   background-color: var(--cream);
   color: var(--text-body);
   font-family: var(--font-body);
-  line-height: 1.5;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Prevent pull-to-refresh on overscroll */
   overscroll-behavior: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--forest-green);
   font-weight: 500;
   letter-spacing: -0.02em;
+  line-height: var(--leading-tight);
 }
 
-/* Texture Utility */
+h1 { font-size: clamp(1.75rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--duration-normal) var(--ease-default);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Touch Target */
+.touch-target {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+}
+
+.touch-target-comfortable {
+  min-height: var(--touch-target-comfortable);
+  min-width: var(--touch-target-comfortable);
+}
+
+/* Section Spacing */
+.section-spacing {
+  padding-top: var(--space-16);
+  padding-bottom: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: var(--space-24);
+    padding-bottom: var(--space-24);
+  }
+}
+
+/* Container */
+.container-tight {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+.container-normal {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .container-tight,
+  .container-normal {
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+}
+
+/* Texture */
 .bg-noise {
   position: relative;
 }
@@ -107,7 +290,10 @@ h6 {
   mix-blend-mode: multiply;
 }
 
-/* Hide scrollbar for horizontal scroll */
+/* ============================================
+   SCROLLBAR STYLES
+   ============================================ */
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -117,7 +303,6 @@ h6 {
   display: none;
 }
 
-/* Minimal scrollbar for desktop */
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
     width: 6px;
@@ -129,7 +314,7 @@ h6 {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #C1C9C0;
+    background: var(--color-forest-200);
     border-radius: 3px;
   }
 
@@ -138,7 +323,6 @@ h6 {
   }
 }
 
-/* Hide scrollbar on mobile */
 @media (max-width: 767px) {
   ::-webkit-scrollbar {
     display: none;
@@ -149,12 +333,16 @@ h6 {
   }
 }
 
-/* Utilities */
+/* ============================================
+   MOBILE-FIRST UTILITIES
+   ============================================ */
+
+/* Text utilities */
 .text-balance {
   text-wrap: balance;
 }
 
-/* Safe area padding for notched phones */
+/* Safe area padding */
 .safe-area-inset-bottom {
   padding-bottom: max(env(safe-area-inset-bottom), 8px);
 }
@@ -163,7 +351,7 @@ h6 {
   padding-top: env(safe-area-inset-top, 0);
 }
 
-/* Line clamp utilities */
+/* Line clamp */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -178,31 +366,32 @@ h6 {
   overflow: hidden;
 }
 
-/* Native-like touch feedback */
+/* Touch feedback */
 @media (hover: none) and (pointer: coarse) {
-
   button:active,
   a:active,
   [role="button"]:active {
     opacity: 0.85;
+    transform: scale(0.98);
   }
 }
 
 /* Prevent iOS zoom on input focus */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-
   input[type="text"],
   input[type="email"],
   input[type="tel"],
   input[type="date"],
   input[type="time"],
+  input[type="password"],
+  input[type="number"],
   textarea,
   select {
     font-size: 16px !important;
   }
 }
 
-/* Mobile-first container */
+/* Mobile container padding */
 @media (max-width: 640px) {
   .container {
     padding-left: 1rem;
@@ -210,23 +399,183 @@ h6 {
   }
 }
 
-/* RSVP Form Input Fields (legacy) */
+/* ============================================
+   FORM FIELD STYLES
+   ============================================ */
+
 .input-field {
-  background-color: transparent;
-  border-bottom: 2px solid #e7e5e4;
-  padding: 0.75rem 0.5rem;
-  outline: none;
-  transition: all 0.3s;
-  font-family: 'Lato', sans-serif;
-  color: #44403c;
+  width: 100%;
+  min-height: var(--touch-target-comfortable);
+  padding: var(--space-3) var(--space-4);
+  background-color: white;
+  border: 1px solid var(--color-forest-100);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-forest-800);
+  transition: border-color var(--duration-normal), box-shadow var(--duration-normal);
 }
 
 .input-field:focus {
-  border-bottom-color: #889E53;
+  outline: none;
+  border-color: var(--muted-gold);
+  box-shadow: 0 0 0 3px rgba(193, 155, 88, 0.15);
 }
 
-/* Selection color */
+.input-field:disabled {
+  background-color: var(--color-forest-50);
+  color: var(--color-forest-400);
+  cursor: not-allowed;
+}
+
+.input-field::placeholder {
+  color: var(--color-forest-400);
+}
+
+.input-field-error {
+  border-color: var(--color-error);
+}
+
+.input-field-error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+/* ============================================
+   BUTTON STYLES (COMPLEMENTARY)
+   ============================================ */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target-comfortable);
+  padding: var(--space-3) var(--space-6);
+  background-color: var(--muted-gold);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 600;
+  border-radius: var(--radius-xl);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--duration-normal), box-shadow var(--duration-normal), transform var(--duration-fast);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-gold-600);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target-comfortable);
+  padding: var(--space-3) var(--space-6);
+  background-color: white;
+  color: var(--color-forest-800);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: 500;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-forest-100);
+  cursor: pointer;
+  transition: background-color var(--duration-normal), border-color var(--duration-normal);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-forest-50);
+  border-color: var(--color-forest-200);
+}
+
+/* ============================================
+   ANIMATION KEYFRAMES
+   ============================================ */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in {
+  animation: fade-in var(--duration-slow) var(--ease-out);
+}
+
+.animate-slide-up {
+  animation: slide-up var(--duration-slow) var(--ease-out);
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s var(--ease-in-out) infinite;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ============================================
+   SELECTION & FOCUS
+   ============================================ */
+
 ::selection {
   background: rgba(193, 155, 88, 0.3);
   color: var(--forest-green);
+}
+
+:focus-visible {
+  outline: 2px solid var(--muted-gold);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   SKELETON LOADING
+   ============================================ */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-forest-100) 25%,
+    var(--color-forest-50) 50%,
+    var(--color-forest-100) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }

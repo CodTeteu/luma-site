@@ -27,18 +27,20 @@ import {
 import { showToast } from "@/components/ui/Toast";
 import Link from "next/link";
 
-const GUEST_GROUPS = [
-    "Sem Grupo",
-    "Família Noiva",
-    "Família Noivo",
-    "Amigos",
-    "Trabalho",
-    "Padrinhos",
-    "Outros"
-];
-
 export default function GuestsPage() {
-    const { eventId, hasBriefing, isLoading: contextLoading } = useBriefing();
+    const { eventId, briefingData, hasBriefing, isLoading: contextLoading } = useBriefing();
+    const eventType = briefingData?.eventType || "wedding";
+
+    const guestGroups = [
+        "Sem Grupo",
+        eventType === "graduation" ? "Família" : "Família Noiva",
+        eventType === "graduation" ? "Amigos de Turma" : "Família Noivo",
+        "Amigos",
+        "Trabalho",
+        eventType === "graduation" ? "Homenageados" : "Padrinhos",
+        "Outros"
+    ];
+
     const [guests, setGuests] = useState<RSVPGuest[]>([]);
     const [stats, setStats] = useState<RSVPStats>({
         total: 0,
@@ -106,7 +108,7 @@ export default function GuestsPage() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "convidados-casamento.csv";
+        a.download = eventType === "graduation" ? "convidados-formatura.csv" : "convidados-casamento.csv";
         a.click();
     };
 
@@ -179,7 +181,7 @@ export default function GuestsPage() {
                         Convidados
                     </h1>
                     <p className="text-[#6B7A6C] mt-1">
-                        Gerencie a lista de presença do seu casamento.
+                        Gerencie a lista de presença do seu {eventType === "graduation" ? "evento" : "casamento"}.
                     </p>
                 </div>
                 <div className="flex gap-2">
@@ -349,7 +351,7 @@ export default function GuestsPage() {
                                             onChange={(e) => handleGroupChange(guest.id, e.target.value)}
                                             className="px-2 py-1 text-xs border border-[#DCD3C5] rounded-md focus:border-[#C19B58] focus:outline-none bg-white text-[#3E4A3F]"
                                         >
-                                            {GUEST_GROUPS.map((group) => (
+                                            {guestGroups.map((group) => (
                                                 <option key={group} value={group}>{group}</option>
                                             ))}
                                         </select>

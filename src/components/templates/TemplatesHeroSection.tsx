@@ -2,10 +2,10 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ChevronRight, Palette } from "lucide-react";
+import { ChevronRight, Palette, Sparkles } from "lucide-react";
 
 /**
- * Hero section for templates gallery - Native app-like compact design.
+ * Hero section for templates gallery - Freemium model focus.
  */
 export function TemplatesHeroSection() {
     return (
@@ -31,20 +31,20 @@ export function TemplatesHeroSection() {
                     <span className="text-[#2A3B2E] font-medium">Templates</span>
                 </motion.nav>
 
-                {/* Badge - Compact on mobile */}
+                {/* Badge - Freemium */}
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4 }}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 mb-4 md:mb-6 border border-[#C19B58]/30 rounded-full bg-white/80 backdrop-blur-md shadow-sm"
                 >
-                    <Palette size={12} className="text-[#C19B58]" />
+                    <Sparkles size={12} className="text-[#C19B58]" />
                     <span className="text-[10px] md:text-xs font-bold tracking-[0.12em] uppercase text-[#2A3B2E]">
-                        10 Templates
+                        Comece Grátis
                     </span>
                 </motion.div>
 
-                {/* Heading - Optimized for mobile */}
+                {/* Heading */}
                 <motion.h1
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -55,29 +55,29 @@ export function TemplatesHeroSection() {
                     <span className="italic text-[#C19B58]">Perfeito</span>
                 </motion.h1>
 
-                {/* Subtitle - Shorter on mobile */}
+                {/* Subtitle */}
                 <motion.p
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.15 }}
                     className="text-[14px] md:text-xl text-[#6B7A6C] max-w-2xl mx-auto mb-5 md:mb-10 leading-relaxed"
                 >
-                    Escolha seu favorito e nossa equipe personaliza tudo para você.
+                    Publique grátis com 1-2 templates. Faça upgrade para liberar todos os templates premium.
                 </motion.p>
 
-                {/* Stats - Compact on mobile */}
+                {/* Stats - Freemium model */}
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
-                    className="flex justify-center gap-8 md:gap-16"
+                    className="flex justify-center gap-6 md:gap-12"
                 >
                     {[
-                        { value: "10", label: "Templates" },
-                        { value: "R$197", label: "Tudo Incluso" },
+                        { value: "Grátis", label: "Para começar" },
+                        { value: "R$97", label: "Plus (Opcional)" },
                     ].map((stat, i) => (
                         <div key={i} className="text-center">
-                            <div className="text-xl md:text-4xl font-medium text-[#C19B58] font-[family-name:var(--font-heading)]">
+                            <div className="text-lg md:text-3xl font-medium text-[#C19B58] font-[family-name:var(--font-heading)]">
                                 {stat.value}
                             </div>
                             <div className="text-[9px] md:text-xs uppercase tracking-wider text-[#6B7A6C] mt-0.5">
@@ -85,6 +85,22 @@ export function TemplatesHeroSection() {
                             </div>
                         </div>
                     ))}
+                </motion.div>
+
+                {/* CTA */}
+                <motion.div
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="mt-8"
+                >
+                    <Link
+                        href="/login"
+                        className="inline-flex items-center gap-2 bg-[#C19B58] text-white px-8 py-4 rounded-full font-medium hover:bg-[#A88347] transition-all shadow-lg shadow-[#C19B58]/25"
+                    >
+                        <Palette size={18} />
+                        Criar meu convite grátis
+                    </Link>
                 </motion.div>
             </div>
         </section>

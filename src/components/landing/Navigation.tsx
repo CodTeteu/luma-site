@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { MessageCircle, Menu, X, Sparkles, ChevronRight } from "lucide-react";
+import { MessageCircle, Menu, X, Sparkles, ChevronRight, Tag } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
 
 /**
@@ -178,22 +178,20 @@ export function Navigation() {
                             {/* Bottom CTAs - Fixed */}
                             <div className="p-4 space-y-2.5 border-t border-[#DCD3C5]/50 bg-white/50 safe-area-inset-bottom">
                                 <Link
-                                    href="/templates"
+                                    href="/login"
                                     onClick={() => setMobileMenuOpen(false)}
                                     className="flex items-center justify-center gap-2 w-full h-12 bg-[#C19B58] text-white rounded-xl font-semibold text-[15px] shadow-lg shadow-[#C19B58]/25 active:scale-[0.98] transition-transform"
                                 >
                                     <Sparkles size={18} />
-                                    Ver Templates
+                                    Criar Convite Grátis
                                 </Link>
                                 <Link
-                                    href={siteConfig.contact.whatsapp.getUrl()}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                    href="/precos"
                                     onClick={() => setMobileMenuOpen(false)}
                                     className="flex items-center justify-center gap-2 w-full h-12 bg-[#2A3B2E] text-white rounded-xl font-semibold text-[15px] active:scale-[0.98] transition-transform"
                                 >
-                                    <MessageCircle size={18} />
-                                    Falar no WhatsApp
+                                    <Tag size={18} />
+                                    Planos e Preços
                                 </Link>
                             </div>
                         </motion.div>

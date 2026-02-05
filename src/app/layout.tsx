@@ -35,8 +35,8 @@ const spaceMono = Space_Mono({ weight: ["400", "700"], subsets: ["latin"], varia
 const roboto = Roboto({ weight: ["300", "400", "700"], subsets: ["latin"], variable: "--font-roboto" });
 
 export const metadata: Metadata = {
-  title: "LUMA | Sites Exclusivos para Casamentos - R$197",
-  description: "Estúdio de Tecnologia para Casamentos. Sites exclusivos com identidade visual fiel, RSVP Ativo via WhatsApp e Lista de Presentes com PIX direto. Entrega em 48h.",
+  title: "LUMA Convites | Convites Digitais Premium - Comece Grátis",
+  description: "Crie seu convite digital com RSVP, lista de presentes e galeria. Grátis para começar, sem custo de manutenção. Upgrade para Plus por R$97.",
   keywords: [
     "site casamento",
     "site de casamento",
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
     canonical: "https://luma.com.br",
   },
   openGraph: {
-    title: "LUMA | Sites Exclusivos para Casamentos",
-    description: "Não alugue um template. Contrate um Estúdio Digital para o seu Casamento. R$197 tudo incluso.",
+    title: "LUMA Convites | Convites Digitais Premium",
+    description: "Crie seu convite digital com tudo incluso. Grátis para começar. Upgrade Plus por R$97.",
     type: "website",
     locale: "pt_BR",
     siteName: "LUMA",

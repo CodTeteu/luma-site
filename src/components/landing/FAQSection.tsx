@@ -12,24 +12,24 @@ interface AccordionItemProps {
 
 const faqItems = [
     {
-        q: "Qual o prazo de entrega?",
-        a: "Após o preenchimento do briefing, nossa equipe entrega a primeira versão do seu site em até 48 horas úteis.",
+        q: "Qual o prazo de publicação?",
+        a: "Você pode publicar seu site instantaneamente clicando em 'Criar Grátis'. Para serviços de Concierge, o prazo de entrega é de até 48 horas úteis.",
     },
     {
         q: "Posso alterar as cores e fontes?",
-        a: "Sim! Nosso plano Premium permite personalização completa da identidade visual, incluindo paleta de cores ilimitada e biblioteca de fontes premium.",
+        a: "Sim! Todos os planos permitem personalização básica. O plano Plus libera todos os templates premium e personalização avançada de cores.",
     },
     {
-        q: "O pagamento é único ou mensal?",
-        a: "Trabalhamos com uma taxa única de criação de R$197. Seu site ficará no ar por 12 meses sem cobranças adicionais.",
+        q: "O pagamento é recorrente ou mensal?",
+        a: "Não! Trabalhamos com pagamento único para o plano Plus (R$97) ou Concierge (R$297). O plano básico é totalmente gratuito por 30 dias após o evento.",
     },
     {
         q: "Vocês oferecem suporte para os convidados?",
         a: "Sim, nossa equipe de Concierge pode auxiliar seus convidados com dúvidas sobre o RSVP e lista de presentes via WhatsApp.",
     },
     {
-        q: "Quanto custa criar um site de casamento LUMA?",
-        a: "O projeto completo custa R$197 em pagamento único. Inclui site personalizado, RSVP via WhatsApp, lista de presentes com PIX e painel administrativo.",
+        q: "Quanto custa criar um convite digital na LUMA?",
+        a: "Você pode começar grátis (R$0) com limites básicos e watermark. Para remover limites e ter um site exclusivo, o plano Plus custa R$97 (pagamento único).",
     },
     {
         q: "Posso ver exemplos de sites criados?",

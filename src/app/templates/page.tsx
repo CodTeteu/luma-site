@@ -8,59 +8,66 @@ import { Navigation, Footer, LuxuryDivider } from "@/components/landing";
 import Script from "next/script";
 
 export const metadata: Metadata = {
-    title: "Templates de Site para Casamento | LUMA - 10 Designs Exclusivos",
+    title: "Templates de Convites Digitais | LUMA - Casamento e Formatura",
     description:
-        "Escolha entre 10 templates exclusivos para seu site de casamento. Designs elegantes por R$197 com RSVP, lista de presentes e personalização completa. Entrega em 48h.",
+        "Escolha entre nossos templates para seu convite digital. Comece grátis com RSVP, lista de presentes e galeria. Upgrade para Plus por R$97.",
     keywords: [
         "templates casamento",
-        "site casamento",
+        "templates formatura",
+        "convite digital grátis",
         "convite digital casamento",
         "RSVP casamento",
         "lista de presentes pix",
-        "site de casamento personalizado",
-        "design casamento",
-        "LUMA templates",
         "convite online casamento",
+        "convite online formatura",
     ],
     openGraph: {
-        title: "Templates de Site para Casamento | LUMA",
-        description: "10 designs exclusivos. R$197 tudo incluso. Entrega em 48h.",
+        title: "Templates de Convites Digitais | LUMA",
+        description: "Comece grátis. Upgrade para Plus por R$97.",
         type: "website",
         locale: "pt_BR",
-        siteName: "LUMA",
+        siteName: "LUMA Convites",
     },
     twitter: {
         card: "summary_large_image",
-        title: "Templates de Site para Casamento | LUMA",
-        description: "10 designs exclusivos. R$197 tudo incluso.",
+        title: "Templates de Convites Digitais | LUMA",
+        description: "Comece grátis. Upgrade para Plus por R$97.",
     },
     alternates: {
-        canonical: "https://luma.com.br/templates",
+        canonical: "https://lumaconvites.com.br/templates",
     },
 };
 
-// Product structured data for templates
+// Product structured data for templates - Updated for freemium model
 const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: "Site de Casamento LUMA",
+    name: "Convite Digital LUMA",
     description:
-        "Site de casamento exclusivo com RSVP via WhatsApp, lista de presentes com PIX direto e painel administrativo.",
+        "Convite digital com RSVP, lista de presentes PIX e galeria. Grátis para começar, upgrade Plus por R$97.",
     brand: {
         "@type": "Brand",
-        name: "LUMA",
+        name: "LUMA Convites",
     },
-    offers: {
-        "@type": "Offer",
-        price: "197.00",
-        priceCurrency: "BRL",
-        availability: "https://schema.org/InStock",
-        priceValidUntil: "2026-12-31",
-        seller: {
-            "@type": "Organization",
-            name: "LUMA Studio",
+    offers: [
+        {
+            "@type": "Offer",
+            name: "Grátis",
+            price: "0.00",
+            priceCurrency: "BRL",
+            availability: "https://schema.org/InStock",
+            description: "Publicação gratuita com watermark e limites básicos",
         },
-    },
+        {
+            "@type": "Offer",
+            name: "Plus",
+            price: "97.00",
+            priceCurrency: "BRL",
+            availability: "https://schema.org/InStock",
+            priceValidUntil: "2026-12-31",
+            description: "Sem watermark, templates premium, RSVP ilimitado",
+        },
+    ],
     aggregateRating: {
         "@type": "AggregateRating",
         ratingValue: "5.0",
@@ -77,19 +84,20 @@ const breadcrumbSchema = {
             "@type": "ListItem",
             position: 1,
             name: "Home",
-            item: "https://luma.com.br",
+            item: "https://lumaconvites.com.br",
         },
         {
             "@type": "ListItem",
             position: 2,
             name: "Templates",
-            item: "https://luma.com.br/templates",
+            item: "https://lumaconvites.com.br/templates",
         },
     ],
 };
 
 /**
- * Templates gallery page showcasing all available wedding website templates.
+ * Templates gallery page showcasing available invitation templates.
+ * Freemium model: start free, upgrade to Plus for R$97.
  */
 export default function TemplatesPage() {
     return (

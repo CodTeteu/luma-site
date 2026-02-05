@@ -17,6 +17,8 @@ import {
     X,
     Sparkles,
     Tag,
+    GraduationCap,
+    School,
 } from "lucide-react";
 import { useBriefing, BriefingData } from "@/contexts/BriefingContext";
 import Link from "next/link";
@@ -97,14 +99,19 @@ export default function DashboardPage() {
     const { briefingData, hasBriefing, isLoading, createEvent } = useBriefing();
     const [isCreating, setIsCreating] = useState(false);
 
-    const handleCreateEvent = async () => {
+    const handleCreateEvent = async (type: "wedding" | "graduation") => {
         setIsCreating(true);
-        // Create with default template - user can change later
+
+        const templateId = type === "wedding" ? "classic-elegance" : "modern-grad";
+        const templateName = type === "wedding" ? "Classic Elegance" : "Modern Graduate";
+        const templateStyle = type === "wedding" ? "Elegante e atemporal" : "Moderno e minimalista";
+
         const success = await createEvent(
-            "classic-elegance",
-            "Classic Elegance",
-            "Elegante e atemporal"
+            templateId,
+            templateName,
+            templateStyle
         );
+
         if (!success) {
             console.error("Failed to create event");
         }
@@ -131,40 +138,50 @@ export default function DashboardPage() {
                         <Tag size={40} className="text-[#C19B58]" />
                     </div>
                     <h1 className="text-2xl md:text-3xl font-medium text-[#2A3B2E] mb-4 font-[family-name:var(--font-heading)]">
-                        Crie Seu Evento
+                        O que vamos celebrar?
                     </h1>
-                    <p className="text-[#6B7A6C] mb-6">
-                        Você ainda não criou um evento. Clique abaixo para começar a personalizar seu convite de casamento.
+                    <p className="text-[#6B7A6C] mb-8">
+                        Escolha o tipo de evento para começar seu convite digital.
+                        <strong> Grátis para começar</strong>, publique em minutos.
                     </p>
 
-                    {/* Price Card */}
-                    <div className="bg-gradient-to-r from-[#2A3B2E] to-[#3E4A3F] rounded-2xl p-6 mb-6 text-white">
-                        <p className="text-sm text-white/60 uppercase tracking-wider mb-2">Projeto Completo</p>
-                        <p className="text-4xl font-bold font-[family-name:var(--font-heading)] mb-2">
-                            R$ 197
-                        </p>
-                        <p className="text-sm text-white/70">Pagamento único • Tudo incluso</p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                        {/* Option: Wedding */}
+                        <motion.button
+                            onClick={() => handleCreateEvent("wedding")}
+                            disabled={isCreating}
+                            whileHover={{ y: -4 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="p-6 bg-white border border-[#DCD3C5] rounded-2xl text-left hover:border-[#C19B58] transition-all group"
+                        >
+                            <div className="w-12 h-12 bg-[#C19B58]/10 rounded-xl flex items-center justify-center mb-4 text-[#C19B58] group-hover:bg-[#C19B58] group-hover:text-white transition-colors">
+                                <Heart size={24} />
+                            </div>
+                            <h3 className="font-medium text-[#2A3B2E] mb-1">Casamento</h3>
+                            <p className="text-xs text-[#6B7A6C]">História, RSVP, presentes e galeria</p>
+                        </motion.button>
+
+                        {/* Option: Graduation */}
+                        <motion.button
+                            onClick={() => handleCreateEvent("graduation")}
+                            disabled={isCreating}
+                            whileHover={{ y: -4 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="p-6 bg-white border border-[#DCD3C5] rounded-2xl text-left hover:border-[#C19B58] transition-all group"
+                        >
+                            <div className="w-12 h-12 bg-[#2A3B2E]/5 rounded-xl flex items-center justify-center mb-4 text-[#2A3B2E] group-hover:bg-[#2A3B2E] group-hover:text-white transition-colors">
+                                <Sparkles size={24} />
+                            </div>
+                            <h3 className="font-medium text-[#2A3B2E] mb-1">Formatura</h3>
+                            <p className="text-xs text-[#6B7A6C]">Colação, festa, traje e fotos</p>
+                        </motion.button>
                     </div>
 
-                    <motion.button
-                        onClick={handleCreateEvent}
-                        disabled={isCreating}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-[#C19B58] text-white rounded-lg font-medium hover:bg-[#b08d4b] transition-colors shadow-lg shadow-[#C19B58]/30 disabled:opacity-70 disabled:cursor-not-allowed"
-                    >
-                        {isCreating ? (
-                            <>
-                                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                Criando...
-                            </>
-                        ) : (
-                            <>
-                                <Sparkles size={18} />
-                                Criar Meu Evento
-                            </>
-                        )}
-                    </motion.button>
+                    {/* Freemium Info */}
+                    <div className="bg-[#F7F5F0] rounded-xl p-4 text-sm text-[#6B7A6C] border border-[#DCD3C5]/50">
+                        <p>✓ Publique grátis com watermark</p>
+                        <p>✓ Upgrade para Plus a qualquer momento</p>
+                    </div>
 
                     <p className="text-xs text-[#6B7A6C] mt-4">
                         Ou <Link href="/templates" className="text-[#C19B58] hover:underline">escolha um template específico</Link>
@@ -192,10 +209,12 @@ export default function DashboardPage() {
             >
                 <div>
                     <h1 className="text-2xl md:text-3xl font-medium text-[#2A3B2E] font-[family-name:var(--font-heading)]">
-                        Bem-vindos, {briefingData?.brideName} & {briefingData?.groomName}! 💍
+                        {briefingData?.eventType === "graduation"
+                            ? `Parabéns pela Conquista, ${briefingData?.brideName}! 🎓`
+                            : `Bem-vindos, ${briefingData?.brideName} & ${briefingData?.groomName}! 💍`}
                     </h1>
                     <p className="text-[#6B7A6C] mt-1">
-                        Gerencie as informações do seu convite de casamento
+                        Gerencie as informações do seu convite de {briefingData?.eventType === "graduation" ? "formatura" : "casamento"}
                     </p>
                 </div>
                 <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full ${status.bg} ${status.text} text-sm font-medium`}>
@@ -229,7 +248,7 @@ export default function DashboardPage() {
 
             {/* Info Sections */}
             <div className="grid lg:grid-cols-2 gap-6">
-                {/* Couple Info */}
+                {/* Couple / Graduate Info */}
                 <motion.section
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -237,12 +256,26 @@ export default function DashboardPage() {
                     className="bg-[#F7F5F0] rounded-2xl p-6 border border-[#DCD3C5]"
                 >
                     <h3 className="text-lg font-medium text-[#2A3B2E] mb-4 flex items-center gap-2 font-[family-name:var(--font-heading)]">
-                        <Heart size={18} className="text-[#C19B58]" />
-                        Dados do Casal
+                        {briefingData?.eventType === "graduation" ? (
+                            <GraduationCap size={18} className="text-[#C19B58]" />
+                        ) : (
+                            <Heart size={18} className="text-[#C19B58]" />
+                        )}
+                        {briefingData?.eventType === "graduation" ? "Dados da Formatura" : "Dados do Casal"}
                     </h3>
                     <div className="space-y-3">
-                        <EditableField label="Noiva" value={briefingData?.brideName || ""} field="brideName" icon={<Heart size={16} />} />
-                        <EditableField label="Noivo" value={briefingData?.groomName || ""} field="groomName" icon={<Heart size={16} />} />
+                        <EditableField
+                            label={briefingData?.eventType === "graduation" ? "Nome" : "Noiva"}
+                            value={briefingData?.brideName || ""}
+                            field="brideName"
+                            icon={briefingData?.eventType === "graduation" ? <GraduationCap size={16} /> : <Heart size={16} />}
+                        />
+                        <EditableField
+                            label={briefingData?.eventType === "graduation" ? "Curso / Instituição" : "Noivo"}
+                            value={briefingData?.groomName || ""}
+                            field="groomName"
+                            icon={briefingData?.eventType === "graduation" ? <School size={16} /> : <Heart size={16} />}
+                        />
                         <EditableField label="Email" value={briefingData?.email || ""} field="email" icon={<Mail size={16} />} type="email" />
                         <EditableField label="WhatsApp" value={briefingData?.phone || ""} field="phone" icon={<Phone size={16} />} type="tel" />
                     </div>
@@ -260,9 +293,27 @@ export default function DashboardPage() {
                         Detalhes do Evento
                     </h3>
                     <div className="space-y-3">
-                        <EditableField label="Data do Casamento" value={briefingData?.weddingDate || ""} field="weddingDate" icon={<Calendar size={16} />} type="date" />
-                        <EditableField label="Horário Cerimônia" value={briefingData?.ceremonyTime || ""} field="ceremonyTime" icon={<Clock size={16} />} type="time" />
-                        <EditableField label="Horário Festa" value={briefingData?.partyTime || ""} field="partyTime" icon={<Clock size={16} />} type="time" />
+                        <EditableField
+                            label={briefingData?.eventType === "graduation" ? "Data da Colação" : "Data do Casamento"}
+                            value={briefingData?.weddingDate || ""}
+                            field="weddingDate"
+                            icon={<Calendar size={16} />}
+                            type="date"
+                        />
+                        <EditableField
+                            label={briefingData?.eventType === "graduation" ? "Horário Colação" : "Horário Cerimônia"}
+                            value={briefingData?.ceremonyTime || ""}
+                            field="ceremonyTime"
+                            icon={<Clock size={16} />}
+                            type="time"
+                        />
+                        <EditableField
+                            label={briefingData?.eventType === "graduation" ? "Horário Baile" : "Horário Festa"}
+                            value={briefingData?.partyTime || ""}
+                            field="partyTime"
+                            icon={<Clock size={16} />}
+                            type="time"
+                        />
                         <EditableField label="Convidados" value={briefingData?.guestCount || ""} field="guestCount" icon={<Users size={16} />} />
                     </div>
                 </motion.section>
@@ -279,8 +330,18 @@ export default function DashboardPage() {
                         Locais
                     </h3>
                     <div className="space-y-3">
-                        <EditableField label="Local da Cerimônia" value={briefingData?.ceremonyLocation || ""} field="ceremonyLocation" icon={<MapPin size={16} />} />
-                        <EditableField label="Local da Festa" value={briefingData?.partyLocation || ""} field="partyLocation" icon={<MapPin size={16} />} />
+                        <EditableField
+                            label={briefingData?.eventType === "graduation" ? "Local da Colação" : "Local da Cerimônia"}
+                            value={briefingData?.ceremonyLocation || ""}
+                            field="ceremonyLocation"
+                            icon={<MapPin size={16} />}
+                        />
+                        <EditableField
+                            label={briefingData?.eventType === "graduation" ? "Local do Baile/Jantar" : "Local da Festa"}
+                            value={briefingData?.partyLocation || ""}
+                            field="partyLocation"
+                            icon={<MapPin size={16} />}
+                        />
                     </div>
                 </motion.section>
 
@@ -296,7 +357,12 @@ export default function DashboardPage() {
                         Preferências de Estilo
                     </h3>
                     <div className="space-y-3">
-                        <EditableField label="Estilo do Casamento" value={briefingData?.style || ""} field="style" icon={<Sparkles size={16} />} />
+                        <EditableField
+                            label={briefingData?.eventType === "graduation" ? "Estilo da Celebração" : "Estilo do Casamento"}
+                            value={briefingData?.style || ""}
+                            field="style"
+                            icon={<Sparkles size={16} />}
+                        />
                         <EditableField label="Cores Preferidas" value={briefingData?.colors || ""} field="colors" icon={<Palette size={16} />} />
                         <EditableField label="Observações" value={briefingData?.message || ""} field="message" icon={<MessageCircle size={16} />} />
                     </div>

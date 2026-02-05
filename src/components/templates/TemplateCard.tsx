@@ -94,12 +94,12 @@ export function TemplateCard({ template, index, onSelect }: TemplateCardProps) {
                 <div className="bg-gradient-to-r from-[#2A3B2E] to-[#3E4A3F] rounded-xl p-3 mb-3">
                     <div className="flex items-center justify-between mb-2">
                         <div>
-                            <p className="text-[8px] text-white/50 uppercase tracking-wider">Completo</p>
-                            <p className="text-xl font-bold text-white font-[family-name:var(--font-heading)]">R$ 197</p>
+                            <p className="text-[8px] text-white/50 uppercase tracking-wider">A partir de</p>
+                            <p className="text-xl font-bold text-white font-[family-name:var(--font-heading)]">R$ 0</p>
                         </div>
                         <div className="text-right">
-                            <p className="text-[9px] text-white/60">Pagamento único</p>
-                            <p className="text-[9px] text-[#C19B58] font-medium">Tudo incluso ✨</p>
+                            <p className="text-[9px] text-white/60">Plano Grátis</p>
+                            <p className="text-[9px] text-[#C19B58] font-medium">Upgrade Plus disponível ✨</p>
                         </div>
                     </div>
 
@@ -131,7 +131,7 @@ export function TemplateCard({ template, index, onSelect }: TemplateCardProps) {
                         handleClick();
                     }}
                 >
-                    Contratar R$ 197
+                    Começar Grátis
                     <ArrowRight size={16} />
                 </motion.button>
             </div>

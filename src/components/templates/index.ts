@@ -8,3 +8,9 @@ export { TemplatesCTASection } from './TemplatesCTASection';
 export { BriefingModal } from './BriefingModal';
 export { templates, categories } from './templateData';
 export type { Template, TemplateCategory } from './templateData';
+
+// Public invite components
+export { Watermark } from './Watermark';
+export { ReportButton } from './ReportButton';
+export { PasswordGate } from './PasswordGate';
+

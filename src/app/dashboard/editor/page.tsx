@@ -137,6 +137,7 @@ export default function EditorPage() {
     const [content, setContent] = useState<InvitationContent>(DEFAULT_INVITATION_CONTENT);
     const [templateId, setTemplateId] = useState("default");
     const [status, setStatus] = useState<"draft" | "published">("draft");
+    const [eventType, setEventType] = useState<"wedding" | "graduation">("wedding");
     const [isSaving, setIsSaving] = useState(false);
     const [isPublishing, setIsPublishing] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
@@ -208,6 +209,7 @@ export default function EditorPage() {
                     setPixKey(eventContent?.payment?.pixKey || "");
                     setPixName(eventContent?.payment?.pixName || "");
                     setGiftsEnabled(eventContent?.sections?.giftsEnabled ?? false);
+                    setEventType(event.event_type || "wedding");
                 }
             } catch (e) {
                 console.error("Error loading event:", e);
@@ -514,19 +516,22 @@ export default function EditorPage() {
             <div className="flex-1 flex overflow-hidden">
                 {/* Left: Editor Form */}
                 <div className="w-[400px] xl:w-[450px] flex-shrink-0 overflow-y-auto p-4 space-y-4 bg-[#F7F5F0] border-r border-[#DCD3C5]">
-                    {/* Couple Section */}
-                    <Section title="Casal" icon={<Users size={18} />}>
+                    {/* Couple / Person Section */}
+                    <Section
+                        title={eventType === "graduation" ? "Formando" : "Casal"}
+                        icon={<Users size={18} />}
+                    >
                         <InputField
-                            label="Nome da Noiva"
+                            label={eventType === "graduation" ? "Nome do Formando(a)" : "Nome da Noiva"}
                             value={content.couple.brideName}
                             onChange={(v) => updateContent("couple", "brideName", v)}
-                            placeholder="Maria"
+                            placeholder={eventType === "graduation" ? "Maria Silva" : "Maria"}
                         />
                         <InputField
-                            label="Nome do Noivo"
+                            label={eventType === "graduation" ? "Curso / Instituição" : "Nome do Noivo"}
                             value={content.couple.groomName}
                             onChange={(v) => updateContent("couple", "groomName", v)}
-                            placeholder="João"
+                            placeholder={eventType === "graduation" ? "Direito - USP" : "João"}
                         />
 
                         {/* Update Slug Button */}
@@ -562,22 +567,25 @@ export default function EditorPage() {
                     </Section>
 
                     {/* Event Section */}
-                    <Section title="Evento" icon={<Calendar size={18} />}>
+                    <Section
+                        title={eventType === "graduation" ? "Datas" : "Evento"}
+                        icon={<Calendar size={18} />}
+                    >
                         <InputField
-                            label="Data do Casamento"
+                            label={eventType === "graduation" ? "Data da Formatura" : "Data do Casamento"}
                             value={content.event.weddingDate}
                             onChange={(v) => updateContent("event", "weddingDate", v)}
                             type="date"
                         />
                         <div className="grid grid-cols-2 gap-4">
                             <InputField
-                                label="Horário Cerimônia"
+                                label={eventType === "graduation" ? "Horário Colação" : "Horário Cerimônia"}
                                 value={content.event.ceremonyTime}
                                 onChange={(v) => updateContent("event", "ceremonyTime", v)}
                                 type="time"
                             />
                             <InputField
-                                label="Horário Festa"
+                                label={eventType === "graduation" ? "Horário Baile" : "Horário Festa"}
                                 value={content.event.partyTime}
                                 onChange={(v) => updateContent("event", "partyTime", v)}
                                 type="time"
@@ -588,25 +596,25 @@ export default function EditorPage() {
                     {/* Locations Section */}
                     <Section title="Locais" icon={<MapPin size={18} />}>
                         <InputField
-                            label="Local da Cerimônia"
+                            label={eventType === "graduation" ? "Local da Colação" : "Local da Cerimônia"}
                             value={content.locations.ceremonyLocation}
                             onChange={(v) => updateContent("locations", "ceremonyLocation", v)}
-                            placeholder="Igreja São José"
+                            placeholder={eventType === "graduation" ? "Auditório Principal" : "Igreja São José"}
                         />
                         <InputField
-                            label="Endereço da Cerimônia"
+                            label={eventType === "graduation" ? "Endereço da Colação" : "Endereço da Cerimônia"}
                             value={content.locations.ceremonyAddress || ""}
                             onChange={(v) => updateContent("locations", "ceremonyAddress", v)}
                             placeholder="Rua das Flores, 123"
                         />
                         <InputField
-                            label="Local da Festa"
+                            label={eventType === "graduation" ? "Local do Baile" : "Local da Festa"}
                             value={content.locations.partyLocation}
                             onChange={(v) => updateContent("locations", "partyLocation", v)}
-                            placeholder="Espaço Jardim"
+                            placeholder={eventType === "graduation" ? "Salão Nobre" : "Espaço Jardim"}
                         />
                         <InputField
-                            label="Endereço da Festa"
+                            label={eventType === "graduation" ? "Endereço do Baile" : "Endereço da Festa"}
                             value={content.locations.partyAddress || ""}
                             onChange={(v) => updateContent("locations", "partyAddress", v)}
                             placeholder="Av. Principal, 456"
