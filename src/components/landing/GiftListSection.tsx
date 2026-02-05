@@ -1,30 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Gift, Settings, Wallet } from "lucide-react";
+import { Gift, Settings, Wallet, MessageCircle } from "lucide-react";
 import Image from "next/image";
 
 const features = [
     {
-        icon: Gift,
-        title: "Experiência de Compra Real",
-        description: "Seus convidados sentem que estão presenteando com experiências reais (jantares, cotas de lua de mel), tornando o ato de presentear muito mais carinhoso e pessoal."
+        icon: MessageCircle,
+        title: "RSVP automatizado no WhatsApp",
+        description: "Seus convidados confirmam presença em poucos cliques e você acompanha tudo em tempo real."
     },
     {
         icon: Wallet,
-        title: "Dinheiro 100% na Sua Conta",
-        description: "Esqueça taxas abusivas de saque ou prazos longos. O convidado paga via PIX e o valor cai instantaneamente na sua conta bancária. Liberdade total."
+        title: "Lista de presentes com PIX direto",
+        description: "Crie cotas e experiências; o pagamento cai instantaneamente na sua conta, sem taxas escondidas."
     },
     {
         icon: Settings,
-        title: "Painel de Controle Completo",
-        description: "Você tem autonomia total para criar, editar e excluir presentes. Defina valores, escolha fotos e organize sua lista como preferir através da nossa área administrativa."
+        title: "Painel administrativo elegante",
+        description: "Atualize fotos, textos e presentes quando quiser. Tudo pensado para ser simples e rápido."
     }
 ];
 
 export function GiftListSection() {
     return (
-        <section className="py-24 bg-white relative overflow-hidden">
+        <section id="funcionalidades" className="py-24 bg-white relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="grid lg:grid-cols-2 gap-16 items-center">
 
@@ -37,15 +37,15 @@ export function GiftListSection() {
                             transition={{ duration: 0.6 }}
                         >
                             <span className="text-[#C19B58] font-medium tracking-wider uppercase text-sm">
-                                O Grande Diferencial
+                                Funcionalidades que encantam
                             </span>
-                            <h2 className="text-4xl md:text-5xl font-serif text-[#1A1A1A] mt-4 mb-6 leading-tight">
-                                Lista de Presentes Inteligente: <br />
-                                <span className="italic text-[#C19B58]">Mais Elegância, Zero Taxas</span>
+                            <h2 className="text-4xl md:text-5xl font-[family-name:var(--font-heading)] text-[#2A3B2E] mt-4 mb-6 leading-tight">
+                                Tecnologia que simplifica <br />
+                                <span className="italic text-[#C19B58]">e emociona</span>
                             </h2>
-                            <p className="text-lg text-gray-600 leading-relaxed">
-                                Transformamos a tradicional &quot;lista de presentes em dinheiro&quot; em uma experiência elegante para seus convidados.
-                                Nossa plataforma simula uma loja virtual onde cada &quot;presente&quot; comprado é, na verdade, uma transferência PIX direto para você.
+                            <p className="text-lg text-[#6B7A6C] leading-relaxed">
+                                Do RSVP inteligente à lista de presentes com PIX, tudo foi pensado para melhorar a experiência dos
+                                seus convidados e reduzir sua carga mental. Você acompanha cada confirmação e presente em tempo real.
                             </p>
                         </motion.div>
 
@@ -63,10 +63,10 @@ export function GiftListSection() {
                                         <feature.icon className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-serif text-[#1A1A1A] mb-2">
+                                        <h3 className="text-xl font-[family-name:var(--font-heading)] text-[#2A3B2E] mb-2">
                                             {feature.title}
                                         </h3>
-                                        <p className="text-gray-600">
+                                        <p className="text-[#6B7A6C]">
                                             {feature.description}
                                         </p>
                                     </div>
@@ -85,7 +85,7 @@ export function GiftListSection() {
                     >
                         <div className="relative">
                             <div className="absolute -inset-4 bg-[#F7F5F0] rounded-2xl -z-10 transform rotate-2" />
-                            <div className="relative rounded-xl overflow-hidden shadow-2xl border border-gray-100">
+                            <div className="relative rounded-xl overflow-hidden shadow-2xl border border-[#E5E0D6]">
                                 <Image
                                     src="/gift-registry-mockup.png"
                                     alt="Interface da Lista de Presentes LUMA"
@@ -104,12 +104,12 @@ export function GiftListSection() {
                             >
                                 <div className="flex items-center gap-3 mb-2">
                                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                                    <span className="text-sm font-medium text-gray-500">Status em Tempo Real</span>
+                                    <span className="text-sm font-medium text-[#6B7A6C]">Status em Tempo Real</span>
                                 </div>
-                                <p className="font-serif text-lg text-[#1A1A1A]">
+                                <p className="font-[family-name:var(--font-heading)] text-lg text-[#2A3B2E]">
                                     &quot;Recebemos um presente de R$ 500!&quot;
                                 </p>
-                                <p className="text-xs text-gray-400 mt-1">
+                                <p className="text-xs text-[#6B7A6C] mt-1">
                                     Notificação instantânea para os noivos
                                 </p>
                             </motion.div>

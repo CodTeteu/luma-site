@@ -37,6 +37,7 @@ export const siteConfig = {
     main: [
       { label: "Templates", href: "/templates" },
       { label: "Como Funciona", href: "#como-funciona" },
+      { label: "Funcionalidades", href: "#funcionalidades" },
       { label: "Sobre", href: "#sobre" },
       { label: "Portfólio", href: "#portfolio" },
       { label: "Dúvidas", href: "#duvidas" },

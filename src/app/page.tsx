@@ -3,6 +3,7 @@ import {
     HeroSection,
     HowItWorksSection,
     VisualIdentitySection,
+    GiftListSection,
     AboutSection,
     PortfolioSection,
     FAQSection,
@@ -21,6 +22,8 @@ export default function HomePage() {
             <HowItWorksSection />
             <LuxuryDivider />
             <VisualIdentitySection />
+            <LuxuryDivider />
+            <GiftListSection />
             <LuxuryDivider />
             <AboutSection />
             <PortfolioSection />

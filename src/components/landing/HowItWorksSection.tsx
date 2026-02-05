@@ -33,7 +33,7 @@ export function HowItWorksSection() {
                         Como funciona nossa Conciergerie?
                     </h2>
                     <p className="text-sm md:text-base text-[#6B7A6C]">
-                        Um processo simples e transparente para você focar no que importa.
+                        Um processo simples, humano e transparente para você focar no que importa.
                     </p>
                 </div>
 
@@ -57,6 +57,18 @@ export function HowItWorksSection() {
                             </div>
                         </motion.div>
                     ))}
+                </div>
+
+                <div className="mt-10 md:mt-16 rounded-2xl border border-[#DCD3C5] bg-[#F7F5F0] p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-[#C19B58] font-bold mb-2">Concierge LUMA</p>
+                        <p className="text-[#2A3B2E] text-lg md:text-xl font-medium">
+                            Aprovação rápida pelo WhatsApp e acompanhamento diário do status do seu site.
+                        </p>
+                    </div>
+                    <div className="text-sm text-[#6B7A6C] max-w-sm">
+                        Você recebe cada etapa, aprova detalhes e tem acesso a uma equipe dedicada a garantir que tudo esteja perfeito.
+                    </div>
                 </div>
             </div>
         </section>

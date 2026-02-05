@@ -130,7 +130,9 @@ export function PortfolioSection() {
                         <h2 className="text-4xl md:text-5xl text-[#2A3B2E] mb-4 font-[family-name:var(--font-heading)]">
                             Nossas Criações
                         </h2>
-                        <p className="text-[#6B7A6C]">Veja o que estamos criando para outros casais</p>
+                        <p className="text-[#6B7A6C]">
+                            Veja o que estamos criando para outros casais e encontre o estilo que mais combina com o seu.
+                        </p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -203,6 +205,20 @@ export function PortfolioSection() {
                                 </div>
                             </motion.div>
                         ))}
+                    </div>
+
+                    <div className="mt-12 flex flex-col md:flex-row items-center justify-between gap-4 rounded-2xl border border-[#DCD3C5] bg-[#F7F5F0] px-6 py-6">
+                        <div>
+                            <p className="text-[#2A3B2E] text-lg font-medium">Quer ver todos os estilos disponíveis?</p>
+                            <p className="text-[#6B7A6C] text-sm">Acesse nossa galeria completa e escolha o seu favorito.</p>
+                        </div>
+                        <Link
+                            href="/templates"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#C19B58] text-white rounded-full font-medium hover:bg-[#b08d4b] transition-colors"
+                        >
+                            Ver galeria de templates
+                            <ArrowRight size={16} />
+                        </Link>
                     </div>
                 </div>
             </section>

@@ -35,6 +35,12 @@ export function FinalCTASection() {
                         As vagas são <span className="font-semibold italic">limitadas por mês</span> para garantir a exclusividade.
                     </p>
 
+                    <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] md:text-sm text-white/90 mb-6">
+                        <span className="rounded-full border border-white/30 px-4 py-1">Pagamento único de R$197</span>
+                        <span className="rounded-full border border-white/30 px-4 py-1">Sem mensalidades</span>
+                        <span className="rounded-full border border-white/30 px-4 py-1">Suporte humano no WhatsApp</span>
+                    </div>
+
                     <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center items-center">
                         <Link
                             href={siteConfig.links.login}

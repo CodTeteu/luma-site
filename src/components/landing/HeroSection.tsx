@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle, Sparkles, Check, ChevronDown } from "lucide-react";
+import { MessageCircle, Sparkles, Check, ChevronDown, Star, Clock, ShieldCheck } from "lucide-react";
 import { siteConfig } from "@/config/site.config";
 
 /**
@@ -16,6 +16,7 @@ export function HeroSection() {
     return (
         <section
             ref={ref}
+            id="hero"
             className="min-h-[100dvh] flex items-center px-5 md:px-6 pt-20 md:pt-32 pb-8 md:pb-20 relative overflow-hidden bg-noise"
         >
             <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-6 md:gap-12 items-center relative z-10">
@@ -41,9 +42,25 @@ export function HeroSection() {
                     </h1>
 
                     {/* Description - Shorter on mobile */}
-                    <p className="text-[15px] md:text-lg text-[#3E4A3F]/80 mb-5 md:mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
-                        Preencha nosso briefing e nossa equipe cria tudo para você. Finalize no WhatsApp.
+                    <p className="text-[15px] md:text-lg text-[#3E4A3F]/80 mb-4 md:mb-6 leading-relaxed max-w-lg mx-auto md:mx-0">
+                        Preencha o briefing e receba seu site pronto em até 48h. Concierge humana no WhatsApp,
+                        identidade visual exclusiva e toda a estrutura para confirmar presença e receber presentes.
                     </p>
+
+                    <ul className="space-y-2 text-sm md:text-base text-[#2A3B2E]/80 mb-6 md:mb-8 max-w-lg mx-auto md:mx-0">
+                        {[
+                            "RSVP automático via WhatsApp para reduzir faltas.",
+                            "Lista de presentes com PIX direto na sua conta.",
+                            "Ajustes ilimitados até ficar perfeito.",
+                        ].map((item) => (
+                            <li key={item} className="flex items-start gap-2">
+                                <span className="mt-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#C19B58]/20">
+                                    <Check size={12} className="text-[#C19B58]" />
+                                </span>
+                                <span>{item}</span>
+                            </li>
+                        ))}
+                    </ul>
 
                     {/* CTAs - Full width, larger on mobile */}
                     <div className="flex flex-col gap-2.5 md:flex-row md:gap-4">
@@ -70,6 +87,21 @@ export function HeroSection() {
                                 Falar com Consultora
                             </motion.div>
                         </Link>
+                    </div>
+
+                    <div className="mt-5 md:mt-6 flex flex-wrap items-center gap-3 text-[11px] md:text-sm text-[#6B7A6C]">
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#DCD3C5] bg-white/70 px-3 py-1">
+                            <Star size={14} className="text-[#C19B58]" />
+                            {siteConfig.stats.averageRating} de avaliação
+                        </span>
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#DCD3C5] bg-white/70 px-3 py-1">
+                            <Clock size={14} className="text-[#C19B58]" />
+                            Entrega em até 48h
+                        </span>
+                        <span className="inline-flex items-center gap-2 rounded-full border border-[#DCD3C5] bg-white/70 px-3 py-1">
+                            <ShieldCheck size={14} className="text-[#C19B58]" />
+                            Pagamento único, sem mensalidades
+                        </span>
                     </div>
                 </motion.div>
 
@@ -102,6 +134,15 @@ export function HeroSection() {
                             <span className="font-bold text-[#2A3B2E] text-[9px] md:text-xs uppercase">RSVP WhatsApp</span>
                         </div>
                         <p className="text-[9px] md:text-xs text-[#6B7A6C]">Confirmam em 1 clique.</p>
+                    </motion.div>
+
+                    <motion.div
+                        animate={{ y: [0, 10, 0] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        className="hidden md:block absolute bottom-6 left-6 bg-white/95 backdrop-blur shadow-lg px-4 py-3 rounded-xl border border-[#C19B58]/10"
+                    >
+                        <p className="text-xs uppercase tracking-widest text-[#C19B58] font-bold">Mais de</p>
+                        <p className="text-lg font-semibold text-[#2A3B2E]">{siteConfig.stats.weddingsCompleted} casamentos</p>
                     </motion.div>
                 </motion.div>
             </div>
