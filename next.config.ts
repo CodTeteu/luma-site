@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
           source: '/malu-lisses/:path*',
           destination: 'https://casamento-malu-lisses.vercel.app/:path*',
         },
+        // Casamento Malu & Lisses — unique assets folder
+        {
+          source: '/_casamento-malu-lisses_assets/:path*',
+          destination: 'https://casamento-malu-lisses.vercel.app/_casamento-malu-lisses_assets/:path*',
+        },
       ],
       afterFiles: [],
       fallback: [],
