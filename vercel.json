@@ -3,6 +3,16 @@
     "framework": "nextjs",
     "buildCommand": "npm run build",
     "outputDirectory": ".next",
+    "rewrites": [
+        {
+            "source": "/malu-lisses",
+            "destination": "https://casamento-malu-lisses.vercel.app"
+        },
+        {
+            "source": "/malu-lisses/:path*",
+            "destination": "https://casamento-malu-lisses.vercel.app/:path*"
+        }
+    ],
     "crons": [
         {
             "path": "/api/maintenance/cleanup-rate-limits?token=${MAINTENANCE_TOKEN}",
