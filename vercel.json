@@ -6,7 +6,7 @@
     "rewrites": [
         {
             "source": "/malu-lisses",
-            "destination": "https://casamento-malu-lisses.vercel.app"
+            "destination": "https://casamento-malu-lisses.vercel.app/"
         },
         {
             "source": "/malu-lisses/:path*",
