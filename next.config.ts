@@ -11,29 +11,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return {
-      beforeFiles: [
-        // Casamento Malu & Lisses — main page
-        {
-          source: '/malu-lisses',
-          destination: 'https://casamento-malu-lisses.vercel.app/',
-        },
-        // Casamento Malu & Lisses — SPA sub-routes (admin, etc)
-        {
-          source: '/malu-lisses/:path*',
-          destination: 'https://casamento-malu-lisses.vercel.app/:path*',
-        },
-        // Casamento Malu & Lisses — unique assets folder
-        {
-          source: '/_casamento-malu-lisses_assets/:path*',
-          destination: 'https://casamento-malu-lisses.vercel.app/_casamento-malu-lisses_assets/:path*',
-        },
-      ],
-      afterFiles: [],
-      fallback: [],
-    };
-  },
 };
 
 export default nextConfig;
