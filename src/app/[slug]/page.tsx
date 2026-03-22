@@ -12,7 +12,7 @@ import Link from "next/link";
 // ============================================
 
 interface PageProps {
-    params: Promise<{ slug: string }>;
+    params: { slug: string };
 }
 
 interface EventData {
@@ -32,7 +32,7 @@ interface EventData {
 // ============================================
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-    const { slug } = await params;
+    const { slug } = params;
     const supabase = await createClient();
 
     if (!supabase) {
@@ -172,7 +172,7 @@ function DraftPage() {
 // ============================================
 
 export default async function InvitationPage({ params }: PageProps) {
-    const { slug } = await params;
+    const { slug } = params;
     const supabase = await createClient();
 
     // If Supabase not configured, show not found
